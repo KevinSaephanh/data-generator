@@ -10,9 +10,9 @@ export const Layout: FC<LayoutProps> = ({ children }) => {
   console.log(children);
 
   return (
-    <div className="flex items-center justify-center flex-col w-screen h-screen">
+    <div className="flex items-center justify-center flex-col w-screen min-h-screen overflow-hidden">
       <Navbar />
-      <main className="flex-grow w-screen bg-blue-200">{children}</main>
+      <main className="flex-grow w-screen">{children}</main>
       <Footer />
     </div>
   );
