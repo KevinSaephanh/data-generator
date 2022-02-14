@@ -20,7 +20,7 @@ export const Navbar: FC = () => {
 
   return (
     <nav className="bg-gray-800 px-2 sm:px-4 py-2.5 h-16 w-screen">
-      <div className="container flex flex-wrap justify-between items-center mx-auto">
+      <div className="flex flex-wrap justify-between items-center mx-auto">
         <Link to={"/"} className="flex">
           <svg
             className="mr-3 h-10"
