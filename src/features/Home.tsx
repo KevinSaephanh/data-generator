@@ -15,7 +15,7 @@ export const Home: FC = () => {
           <h1 className="text-5xl md:text-6xl text-gray-800 font-extrabold tracking-tighter mb-4">
             Data Generator
           </h1>
-          <p className="text-lg md:text-xl max-w-3xl mx-auto mb-8">
+          <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 md:mt-10">
             Need custom mock data modeled after your entities to test your app? Want to add typing
             for your environment variables? Try this app!
           </p>
