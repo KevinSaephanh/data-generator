@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Select } from "./Select";
 import { UploadInput } from "./UploadInput";
@@ -7,19 +7,33 @@ import { UploadInput } from "./UploadInput";
 
 export const Form: FC = () => {
   const { register, handleSubmit } = useForm();
+  const [inputs, setInputs] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [data, setData] = useState("");
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+
+  Object.keys(inputs).map((key) => console.log(key));
 
   return (
     <form
       className="w-11/12 md:w-3/5 mx-auto flex flex-col min-h-96"
       onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}
     >
-      <div className="flex">
-        <input className="w-72 mb-5 p-2" {...register("username")} placeholder="Username" />
-        <Select />
+      <div className="flex flex-col">
+        {Object.keys(inputs).map((key, i) => (
+          <div className="flex" key={i}>
+            <input className="w-52 md:w-64 mb-5 p-2" {...register(key)} placeholder={key} />
+            <Select />
+          </div>
+        ))}
       </div>
-      <input className="w-72 mb-5 p-2" {...register("email")} placeholder="Email" />
-      <input className="w-72 mb-5 p-2" {...register("password")} placeholder="Password" />
 
       <button
         type="submit"

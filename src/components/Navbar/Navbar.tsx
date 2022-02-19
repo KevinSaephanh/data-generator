@@ -20,7 +20,7 @@ export const Navbar: FC = () => {
   ];
 
   return (
-    <nav className="bg-gray-800 relative px-2 py-3 w-screen">
+    <nav className="bg-gray-800 relative px-2 py-3 w-full">
       <div className="flex flex-wrap items-center justify-between">
         <div className="w-full relative flex justify-between md:w-auto md:static md:block md:justify-start">
           {/* Logo */}
