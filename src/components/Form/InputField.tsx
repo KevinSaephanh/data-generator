@@ -14,7 +14,7 @@ export const InputField: FC<InputFieldProps> = ({ type, placeholder, pattern, re
       placeholder={placeholder}
       pattern={pattern}
       type={type}
-      className="w-48 md:w-64 mb-5 p-2"
+      className="w-44 md:w-64 mb-5 p-2"
       minLength={1}
       maxLength={20}
       required

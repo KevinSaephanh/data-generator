@@ -11,7 +11,7 @@ type SelectFieldProps = {
 export const SelectField: FC<SelectFieldProps> = ({ options, registration, placeholder }) => {
   return (
     <>
-      <select className="w-36 md:w-40 mb-5 p-2" placeholder={placeholder} {...registration}>
+      <select className="w-32 md:w-40 mb-5 p-2" placeholder={placeholder} {...registration}>
         {options.map(({ label, value }, key) => (
           <option key={key} value={value}>
             {label}

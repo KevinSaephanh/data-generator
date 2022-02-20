@@ -34,15 +34,25 @@ export const Form: FC = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
+  const handleClick = (data: any) => {
+    console.log(data);
+  };
+
+  const handleDelete = (key: string) => {};
+
   return (
     <form
       className="w-11/12 md:w-3/5 mx-auto flex flex-col min-h-96"
-      onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}
+      onSubmit={handleSubmit((data) => handleClick(data))}
     >
-      <div className="flex flex-row">
-        <div className="flex flex-col mr-5 md:mr-10">
+      <div className="flex flex-col">
+        <div className="flex flex-row space-x-24 md:space-x-40 mr-5 md:mr-10">
           <ColumnTitle title="Field Name" />
-          {Object.keys(inputs).map((key, i) => (
+          <ColumnTitle title="Type" />
+        </div>
+
+        {Object.keys(inputs).map((key, i) => (
+          <div className="flex flex-row">
             <InputField
               type="text"
               placeholder={key}
@@ -50,15 +60,26 @@ export const Form: FC = () => {
               key={i}
               registration={register(key)}
             />
-          ))}
-        </div>
-
-        <div className="flex flex-col">
-          <ColumnTitle title="Type" />
-          {Object.keys(inputs).map((key, i) => (
             <SelectField options={options} key={i} registration={register(key)} />
-          ))}
-        </div>
+
+            <svg
+              className="block h-6 w-6 mt-2 ml-5 md:ml-10 rounded-full cursor-pointer hover:text-white hover:bg-gray-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+              onClick={() => handleDelete(key)}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+        ))}
       </div>
 
       <button
