@@ -4,41 +4,54 @@ import { Option } from "../../types/Option";
 import { ColumnTitle } from "./ColumnTitle";
 import { InputField } from "./InputField";
 import { SelectField } from "./SelectField";
-import { UploadInput } from "./UploadInput";
-
-// Avatar creator: https://robohash.org/
 
 const options: Option[] = [
   { label: "Select a type", value: "" },
   { label: "Username", value: "username" },
-  { label: "FirstName", value: "firstName" },
-  { label: "lastName", value: "lastName" },
+  { label: "First Name", value: "firstName" },
+  { label: "last Name", value: "lastName" },
   { label: "Email", value: "email" },
   { label: "Avatar", value: "avatar" },
   { label: "Date", value: "date" },
-  { label: "PrimaryId", value: "primaryId" },
-  { label: "UniqueId", value: "uniqueId" },
+  { label: "Primary ID", value: "primaryId" },
+  { label: "Unique ID", value: "uniqueId" },
 ];
 
 export const Form: FC = () => {
   const { register, handleSubmit } = useForm();
-  const [inputs, setInputs] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [inputs, setInputs] = useState([
+    { name: "userId", type: "uniqueId" },
+    { name: "username", type: "username" },
+    { name: "email", type: "email" },
+    { name: "avatar", type: "avatar" },
+  ]);
   const [data, setData] = useState("");
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value });
-  };
 
   const handleClick = (data: any) => {
     console.log(data);
   };
 
-  const handleDelete = (key: string) => {};
+  const handleAddField = () => {
+    setInputs([...inputs, { name: "newField", type: "asdf" }]);
+  };
+
+  const handleDeleteField = (key: string) => {
+    const temp = [...inputs];
+    const index = temp.findIndex((input) => input.name === key);
+    temp.splice(index, 1);
+    setInputs(temp);
+  };
+
+  const isDisabled = () => {
+    inputs.forEach((i) => {
+      if (i.name.length < 1 || i.type.length < 1) return true;
+    });
+
+    return false;
+  };
+  inputs.forEach((i) => {
+    Object.values(i).map((el) => console.log(el));
+  });
 
   return (
     <form
@@ -50,17 +63,19 @@ export const Form: FC = () => {
           <ColumnTitle title="Field Name" />
           <ColumnTitle title="Type" />
         </div>
-
-        {Object.keys(inputs).map((key, i) => (
-          <div className="flex flex-row">
+        {inputs.map((input, i) => (
+          <div className="flex flex-row" key={i}>
             <InputField
               type="text"
-              placeholder={key}
+              placeholder={input.name}
               pattern={"[A-Za-z0-9-_]+"}
-              key={i}
-              registration={register(key)}
+              registration={register(input.name)}
             />
-            <SelectField options={options} key={i} registration={register(key)} />
+            <SelectField
+              options={options}
+              defaultValue={input.type}
+              registration={register(input.type)}
+            />
 
             <svg
               className="block h-6 w-6 mt-2 ml-5 md:ml-10 rounded-full cursor-pointer hover:text-white hover:bg-gray-500"
@@ -69,7 +84,7 @@ export const Form: FC = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
               aria-hidden="true"
-              onClick={() => handleDelete(key)}
+              onClick={() => handleDeleteField(input.name)}
             >
               <path
                 strokeLinecap="round"
@@ -82,12 +97,21 @@ export const Form: FC = () => {
         ))}
       </div>
 
-      <button
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-24 py-2 px-4 mb-5 rounded"
-      >
-        Preview
-      </button>
+      <div className="flex flex-row">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 rounded"
+          onClick={handleAddField}
+        >
+          Add Field
+        </button>
+        <button
+          type="submit"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mb-5 rounded"
+          disabled={isDisabled()}
+        >
+          Generate
+        </button>
+      </div>
     </form>
   );
 };
