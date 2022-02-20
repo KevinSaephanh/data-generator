@@ -1,9 +1,24 @@
 import { ChangeEvent, FC, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Select } from "./Select";
+import { Option } from "../../types/Option";
+import { ColumnTitle } from "./ColumnTitle";
+import { InputField } from "./InputField";
+import { SelectField } from "./SelectField";
 import { UploadInput } from "./UploadInput";
 
 // Avatar creator: https://robohash.org/
+
+const options: Option[] = [
+  { label: "Select a type", value: "" },
+  { label: "Username", value: "username" },
+  { label: "FirstName", value: "firstName" },
+  { label: "lastName", value: "lastName" },
+  { label: "Email", value: "email" },
+  { label: "Avatar", value: "avatar" },
+  { label: "Date", value: "date" },
+  { label: "PrimaryId", value: "primaryId" },
+  { label: "UniqueId", value: "uniqueId" },
+];
 
 export const Form: FC = () => {
   const { register, handleSubmit } = useForm();
@@ -19,20 +34,31 @@ export const Form: FC = () => {
     setInputs({ ...inputs, [name]: value });
   };
 
-  Object.keys(inputs).map((key) => console.log(key));
-
   return (
     <form
       className="w-11/12 md:w-3/5 mx-auto flex flex-col min-h-96"
       onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}
     >
-      <div className="flex flex-col">
-        {Object.keys(inputs).map((key, i) => (
-          <div className="flex" key={i}>
-            <input className="w-52 md:w-64 mb-5 p-2" {...register(key)} placeholder={key} />
-            <Select />
-          </div>
-        ))}
+      <div className="flex flex-row">
+        <div className="flex flex-col mr-5 md:mr-10">
+          <ColumnTitle title="Field Name" />
+          {Object.keys(inputs).map((key, i) => (
+            <InputField
+              type="text"
+              placeholder={key}
+              pattern={"[A-Za-z0-9-_]+"}
+              key={i}
+              registration={register(key)}
+            />
+          ))}
+        </div>
+
+        <div className="flex flex-col">
+          <ColumnTitle title="Type" />
+          {Object.keys(inputs).map((key, i) => (
+            <SelectField options={options} key={i} registration={register(key)} />
+          ))}
+        </div>
       </div>
 
       <button
