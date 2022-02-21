@@ -81,10 +81,9 @@ export const Navbar: FC = () => {
           <div className={"md:flex flex-grow items-center " + (isOpen ? "flex" : "hidden")}>
             <ul className="flex flex-col md:flex-row list-none md:ml-auto">
               {navs.map((nav, key) => (
-                <li className="nav-item md:pr-10">
+                <li className="nav-item md:pr-10" key={key}>
                   <Link
                     to={nav.to}
-                    key={key}
                     className="nav-item block px-3 py-2 text-white md:text-lg rounded md:bg-transparent md:p-0 hover:opacity-75"
                     aria-current="page"
                   >

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from "react";
+import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Option } from "../../types/Option";
 import { ColumnTitle } from "./ColumnTitle";
@@ -25,14 +25,20 @@ export const Form: FC = () => {
     { name: "email", type: "email" },
     { name: "avatar", type: "avatar" },
   ]);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [data, setData] = useState("");
 
   const handleClick = (data: any) => {
+    setIsGenerating(true);
     console.log(data);
+
+    setTimeout(() => {
+      setIsGenerating(false);
+    }, 3000);
   };
 
   const handleAddField = () => {
-    setInputs([...inputs, { name: "newField", type: "asdf" }]);
+    setInputs([...inputs, { name: "newField", type: "Select a type" }]);
   };
 
   const handleDeleteField = (key: string) => {
@@ -43,15 +49,9 @@ export const Form: FC = () => {
   };
 
   const isDisabled = () => {
-    inputs.forEach((i) => {
-      if (i.name.length < 1 || i.type.length < 1) return true;
-    });
-
+    if (inputs.some((i) => i.name.length < 1 || i.type.length < 1)) return true;
     return false;
   };
-  inputs.forEach((i) => {
-    Object.values(i).map((el) => console.log(el));
-  });
 
   return (
     <form
@@ -68,12 +68,15 @@ export const Form: FC = () => {
             <InputField
               type="text"
               placeholder={input.name}
+              defaultValue={input.name}
               pattern={"[A-Za-z0-9-_]+"}
+              disabled={isGenerating}
               registration={register(input.name)}
             />
             <SelectField
               options={options}
               defaultValue={input.type}
+              disabled={isGenerating}
               registration={register(input.type)}
             />
 
@@ -99,15 +102,16 @@ export const Form: FC = () => {
 
       <div className="flex flex-row">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 rounded"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 rounded disabled:opacity-25"
           onClick={handleAddField}
+          disabled={isGenerating}
         >
           Add Field
         </button>
         <button
           type="submit"
-          className="bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mb-5 rounded"
-          disabled={isDisabled()}
+          className="bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mb-5 rounded disabled:opacity-25"
+          disabled={isDisabled() || isGenerating}
         >
           Generate
         </button>
