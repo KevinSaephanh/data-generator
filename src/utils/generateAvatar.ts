@@ -1,4 +1,6 @@
+import { getRandomNum } from "./getRandomNum";
+
 export const generateAvatarUrl = () => {
-  const randomNum = Math.random() * (10000 - 1) + 1;
+  const randomNum = getRandomNum(1, 10000);
   return `https://robohash.org/${randomNum}`;
 };

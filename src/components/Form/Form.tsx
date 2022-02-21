@@ -1,9 +1,8 @@
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Option } from "../../types/Option";
 import { ColumnTitle } from "./ColumnTitle";
 import { InputField } from "./InputField";
-import { SelectField } from "./SelectField";
+import { Option, SelectField } from "./SelectField";
 
 const options: Option[] = [
   { label: "Select a type", value: "" },
@@ -18,7 +17,7 @@ const options: Option[] = [
 ];
 
 export const Form: FC = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, unregister } = useForm();
   const [inputs, setInputs] = useState([
     { name: "userId", type: "uniqueId" },
     { name: "username", type: "username" },
@@ -45,6 +44,7 @@ export const Form: FC = () => {
     const temp = [...inputs];
     const index = temp.findIndex((input) => input.name === key);
     temp.splice(index, 1);
+    unregister(key);
     setInputs(temp);
   };
 
@@ -54,10 +54,7 @@ export const Form: FC = () => {
   };
 
   return (
-    <form
-      className="w-11/12 md:w-3/5 mx-auto flex flex-col min-h-96"
-      onSubmit={handleSubmit((data) => handleClick(data))}
-    >
+    <form className="w-11/12 md:w-3/5 mx-auto flex flex-col min-h-96">
       <div className="flex flex-col">
         <div className="flex flex-row space-x-24 md:space-x-40 mr-5 md:mr-10">
           <ColumnTitle title="Field Name" />
@@ -103,8 +100,8 @@ export const Form: FC = () => {
       <div className="flex flex-row">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 rounded disabled:opacity-25"
-          onClick={handleAddField}
           disabled={isGenerating}
+          onClick={handleAddField}
         >
           Add Field
         </button>
@@ -112,6 +109,7 @@ export const Form: FC = () => {
           type="submit"
           className="bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mb-5 rounded disabled:opacity-25"
           disabled={isDisabled() || isGenerating}
+          onClick={handleSubmit((data) => handleClick(data))}
         >
           Generate
         </button>
