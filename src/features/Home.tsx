@@ -3,7 +3,7 @@ import { Form } from "../components/Form/Form";
 import { Preview } from "../components/Preview/Preview";
 
 export const Home: FC = () => {
-  const [preview, setPreview] = useState({
+  const [data, setData] = useState({
     n: "asda",
     v: " 'asda",
     va: " 'asda",
@@ -12,8 +12,8 @@ export const Home: FC = () => {
     vbv: " 'asda",
   });
 
-  const handleSetPreview = (value: any) => {
-    setPreview(value);
+  const handleSetData = (value: any) => {
+    setData(value);
   };
 
   return (
@@ -32,9 +32,9 @@ export const Home: FC = () => {
       </section>
 
       <section className="relative w-full md:w-11/12 md:mx-auto">
-        <div className="flex flex-col sm:flex-row md:p-10">
+        <div className="flex flex-col md:flex-row md:p-10">
           <Form />
-          <Preview data={preview} />
+          <Preview data={data} />
         </div>
       </section>
     </>
