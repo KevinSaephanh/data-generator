@@ -3,10 +3,7 @@ interface Enum {
 }
 
 export const enumToString = (value: string, enumObj: Enum) => {
-  let str;
-
-  Object.keys(enumObj)
+  return Object.keys(enumObj)
     .filter((key) => !isNaN(Number(enumObj[key as unknown as keyof typeof enumObj])))
-    .map((k) => (str = k));
-  return str;
+    .find((k) => k === value) as string;
 };

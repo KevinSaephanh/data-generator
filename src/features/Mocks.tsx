@@ -7,6 +7,7 @@ import {
   createProducts,
   createUsers,
 } from "../staticDataGenerator";
+import { enumToString } from "../utils/enumToString";
 
 enum Entities {
   Users,
@@ -18,23 +19,23 @@ enum Entities {
 
 export const Mocks: FC = () => {
   const [data, setData] = useState<any>(createUsers());
-  const [activeEntity, setActiveEntity] = useState(Entities.Users);
+  const [activeEntity, setActiveEntity] = useState(Entities[Entities.Users]);
 
   useEffect(() => {
     switch (activeEntity) {
-      case Entities.Users:
+      case Entities[Entities.Users]:
         setData(createUsers());
         return;
-      case Entities.Posts:
+      case Entities[Entities.Posts]:
         setData(createPosts());
         return;
-      case Entities.Comments:
+      case Entities[Entities.Comments]:
         setData(createComments());
         return;
-      case Entities.Products:
+      case Entities[Entities.Products]:
         setData(createProducts());
         return;
-      case Entities.Orders:
+      case Entities[Entities.Orders]:
         setData(createOrders());
         return;
       default:
@@ -59,17 +60,17 @@ export const Mocks: FC = () => {
       <section className="relative w-full md:w-11/12 md:mx-auto mt-10 md:mt-0">
         <div className="flex flex-col md:flex-row md:p-10">
           <ul className="flex flex-row md:flex-col mx-auto md:mx-0 md:mt-12">
-            {Object.values(Entities)
-              .filter((k) => typeof Entities[k as number] === "number")
-              .map((key, i) => (
+            {Object.keys(Entities)
+              .filter((key) => enumToString(key, Entities))
+              .map((name, i) => (
                 <li
                   className={`cursor-pointer p-2 rounded hover:bg-blue-500 ${
-                    key === Entities[activeEntity] ? "bg-blue-200" : ""
+                    name === enumToString(activeEntity, Entities) ? "bg-blue-200" : ""
                   }`}
                   key={i}
-                  onClick={() => setActiveEntity(Entities[key as keyof typeof Entities])}
+                  onClick={() => setActiveEntity(enumToString(name, Entities))}
                 >
-                  {key}
+                  {name}
                 </li>
               ))}
           </ul>

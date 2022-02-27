@@ -39,9 +39,10 @@ const defaultEnvTypeFields = [
 
 type FormProps = {
   formName: string;
+  handleSetData: Function;
 };
 
-export const Form: FC<FormProps> = ({ formName }) => {
+export const Form: FC<FormProps> = ({ formName, handleSetData }) => {
   const { register, handleSubmit, control } = useForm({
     defaultValues: { entities: defaultEntityFields },
   });
@@ -50,7 +51,6 @@ export const Form: FC<FormProps> = ({ formName }) => {
     name: "entities",
   });
   const [isGenerating, setIsGenerating] = useState(false);
-  const [data, setData] = useState("");
 
   useEffect(() => {
     console.log(formName);

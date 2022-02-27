@@ -3,13 +3,13 @@ import { Form } from "../components/Form/Form";
 import { Preview } from "../components/Preview/Preview";
 import { enumToString } from "../utils/enumToString";
 
-export enum FormNames {
+enum FormNames {
   MockData,
   EnvTypes,
 }
 
 export const Home: FC = () => {
-  const [formName, setFormName] = useState("MockData" as keyof typeof FormNames);
+  const [formName, setFormName] = useState(FormNames[FormNames.MockData]);
   const [data, setData] = useState({
     n: "asda",
     v: " 'asda",
@@ -22,8 +22,6 @@ export const Home: FC = () => {
   const handleSetData = (value: any) => {
     setData(value);
   };
-
-  console.log(enumToString("", FormNames));
 
   return (
     <>
@@ -45,7 +43,7 @@ export const Home: FC = () => {
           <div className="flex flex-col">
             <ul className="flex flex-row flex-wrap list-none border-b-0 mb-4" role="tablist">
               {Object.keys(FormNames)
-                .filter((key) => !isNaN(Number(FormNames[key as keyof typeof FormNames])))
+                .filter((key) => enumToString(key, FormNames))
                 .map((name, i) => (
                   <li
                     className="block font-semibold ml-4 md:ml-0 px-2 md:px-2 py-2 rounded hover:border-transparent hover:bg-blue-400 focus:border-transparent active cursor-pointer"
@@ -53,13 +51,13 @@ export const Home: FC = () => {
                     aria-controls={`tabs-${name}`}
                     aria-selected="true"
                     key={i}
-                    onClick={() => setFormName(name as keyof typeof FormNames)}
+                    onClick={() => setFormName(enumToString(name, FormNames))}
                   >
                     {name}
                   </li>
                 ))}
             </ul>
-            <Form formName={formName.toString()} />
+            <Form formName={formName} handleSetData={handleSetData} />
           </div>
           <Preview data={data} />
         </div>
