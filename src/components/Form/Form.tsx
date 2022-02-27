@@ -1,9 +1,9 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { InputField } from "./InputField";
 import { Option, SelectField } from "./SelectField";
 
-const options: Option[] = [
+const entityOptions: Option[] = [
   { label: "Select a type", value: "" },
   { label: "Username", value: "username" },
   { label: "First Name", value: "firstName" },
@@ -15,16 +15,35 @@ const options: Option[] = [
   { label: "Unique ID", value: "uniqueId" },
 ];
 
-const defaultFields = [
+const envTypeOptions: Option[] = [
+  { label: "Select a type", value: "" },
+  { label: "Date", value: "date" },
+  { label: "Primary ID", value: "primaryId" },
+  { label: "Unique ID", value: "uniqueId" },
+];
+
+const defaultEntityFields = [
   { name: "userId", type: "uniqueId" },
   { name: "username", type: "username" },
   { name: "email", type: "email" },
   { name: "avatar", type: "avatar" },
 ];
 
-export const Form: FC = () => {
+const defaultEnvTypeFields = [
+  { name: "port", type: "number" },
+  { name: "node_env", type: "string" },
+  { name: "access_token_secret", type: "string" },
+  { name: "refresh_token_secret", type: "string" },
+  { name: "db_url", type: "string" },
+];
+
+type FormProps = {
+  formName: string;
+};
+
+export const Form: FC<FormProps> = ({ formName }) => {
   const { register, handleSubmit, control } = useForm({
-    defaultValues: { entities: defaultFields },
+    defaultValues: { entities: defaultEntityFields },
   });
   const { fields, append, remove } = useFieldArray({
     control,
@@ -32,6 +51,10 @@ export const Form: FC = () => {
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [data, setData] = useState("");
+
+  useEffect(() => {
+    console.log(formName);
+  }, [formName]);
 
   const handleClick = (data: any) => {
     setIsGenerating(true);
@@ -51,7 +74,7 @@ export const Form: FC = () => {
   };
 
   return (
-    <form className="w-11/12 md:w-3/5 mx-auto flex flex-col min-h-96">
+    <form className="w-11/12 md:w-full mx-auto flex flex-col min-h-96">
       <div className="flex flex-col">
         <div className="flex flex-row space-x-24 md:space-x-40 mr-5 md:mr-10">
           <h3 className="font-semibold pb-5 pl-2 md:text-lg">Field Name</h3>
@@ -68,7 +91,7 @@ export const Form: FC = () => {
                 registration={register(`entities.${i}.name`, { required: true })}
               />
               <SelectField
-                options={options}
+                options={entityOptions}
                 defaultValue={field.type}
                 disabled={isGenerating}
                 registration={register(`entities.${i}.name`, { required: true })}

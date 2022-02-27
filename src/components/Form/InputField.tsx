@@ -22,7 +22,7 @@ export const InputField: FC<InputFieldProps> = ({
       pattern={pattern}
       defaultValue={defaultValue}
       disabled={disabled}
-      className="w-44 md:w-64 mb-5 p-2"
+      className="w-44 md:w-64 mb-5 p-2 mr-5"
       minLength={1}
       maxLength={20}
       {...registration}
