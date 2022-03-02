@@ -65,10 +65,10 @@ export const Mocks: FC = () => {
               .map((name, i) => (
                 <li
                   className={`cursor-pointer p-2 rounded hover:bg-blue-500 ${
-                    name === enumToString(activeEntity, Entities) ? "bg-blue-200" : ""
+                    name === activeEntity ? "bg-blue-200" : ""
                   }`}
                   key={i}
-                  onClick={() => setActiveEntity(enumToString(name, Entities))}
+                  onClick={() => setActiveEntity(name)}
                 >
                   {name}
                 </li>

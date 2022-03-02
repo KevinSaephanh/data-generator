@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import { Option } from "../../types/Option";
 import { InputField } from "./InputField";
-import { Option, SelectField } from "./SelectField";
+import { SelectField } from "./SelectField";
 
 const entityOptions: Option[] = [
   { label: "Select a type", value: "" },

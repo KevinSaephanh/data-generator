@@ -6,6 +6,16 @@ module.exports = {
       minHeight: {
         500: "500px",
       },
+      height: {
+        550: "550px",
+      },
+      width: {
+        200: "200px",
+        500: "500px",
+      },
+      maxWidth: {
+        700: "700px",
+      },
     },
   },
   variants: {

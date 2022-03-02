@@ -10,14 +10,9 @@ enum FormNames {
 
 export const Home: FC = () => {
   const [formName, setFormName] = useState(FormNames[FormNames.MockData]);
-  const [data, setData] = useState({
-    n: "asda",
-    v: " 'asda",
-    va: " 'asda",
-    v2: " 'asda",
-    vg: " 'asda",
-    vbv: " 'asda",
-  });
+  const [data, setData] = useState<any[]>([]);
+  const [entityData, setEntityData] = useState();
+  const [envTypeData, setEnvTypeData] = useState();
 
   const handleSetData = (value: any) => {
     setData(value);
@@ -46,7 +41,7 @@ export const Home: FC = () => {
                 .filter((key) => enumToString(key, FormNames))
                 .map((name, i) => (
                   <li
-                    className="block font-semibold ml-4 md:ml-0 px-2 md:px-2 py-2 rounded hover:border-transparent hover:bg-blue-400 focus:border-transparent active cursor-pointer"
+                    className="block text-lg font-semibold ml-4 md:ml-0 px-2 md:px-2 py-2 rounded hover:border-transparent hover:bg-blue-400 focus:border-transparent active cursor-pointer"
                     role="tab"
                     aria-controls={`tabs-${name}`}
                     aria-selected="true"
