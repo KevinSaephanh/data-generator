@@ -3,19 +3,24 @@ import { Form } from "../components/Form/Form";
 import { Preview } from "../components/Preview/Preview";
 import { enumToString } from "../utils/enumToString";
 
-enum FormNames {
+enum Tabs {
   MockData,
   EnvTypes,
 }
 
 export const Home: FC = () => {
-  const [formName, setFormName] = useState(FormNames[FormNames.MockData]);
-  const [data, setData] = useState<any[]>([]);
-  const [entityData, setEntityData] = useState();
-  const [envTypeData, setEnvTypeData] = useState();
+  const [activeTab, setActiveTab] = useState(Tabs[Tabs.MockData]);
+  const [submitted, setSubmitted] = useState(false);
+  const [entityData, setEntityData] = useState<any[]>([]);
+  const [envTypeData, setEnvTypeData] = useState<any[]>([]);
 
-  const handleSetData = (value: any) => {
-    setData(value);
+  const handleSetData = (value: any[]) => {
+    if (activeTab === Tabs[Tabs.MockData]) setEntityData(value);
+    else setEnvTypeData(value);
+  };
+
+  const toggleSubmit = () => {
+    setSubmitted(!submitted);
   };
 
   return (
@@ -37,8 +42,8 @@ export const Home: FC = () => {
         <div className="flex flex-col md:flex-row md:p-10">
           <div className="flex flex-col">
             <ul className="flex flex-row flex-wrap list-none border-b-0 mb-4" role="tablist">
-              {Object.keys(FormNames)
-                .filter((key) => enumToString(key, FormNames))
+              {Object.keys(Tabs)
+                .filter((key) => enumToString(key, Tabs))
                 .map((name, i) => (
                   <li
                     className="block text-lg font-semibold ml-4 md:ml-0 px-2 md:px-2 py-2 rounded hover:border-transparent hover:bg-blue-400 focus:border-transparent active cursor-pointer"
@@ -46,15 +51,30 @@ export const Home: FC = () => {
                     aria-controls={`tabs-${name}`}
                     aria-selected="true"
                     key={i}
-                    onClick={() => setFormName(enumToString(name, FormNames))}
+                    onClick={() => setActiveTab(enumToString(name, Tabs))}
                   >
                     {name}
                   </li>
                 ))}
             </ul>
-            <Form formName={formName} handleSetData={handleSetData} />
+            {/* Toggle between 2 forms depending on form name */}
+            {activeTab === Tabs[Tabs.MockData] ? (
+              <Form
+                key={1}
+                name={activeTab}
+                handleSetData={handleSetData}
+                toggleSubmit={toggleSubmit}
+              />
+            ) : (
+              <Form
+                key={2}
+                name={activeTab}
+                handleSetData={handleSetData}
+                toggleSubmit={toggleSubmit}
+              />
+            )}
           </div>
-          <Preview data={data} />
+          <Preview data={activeTab === Tabs[Tabs.MockData] ? entityData : envTypeData} />
         </div>
       </section>
     </>

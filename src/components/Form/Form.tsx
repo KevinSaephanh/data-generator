@@ -18,9 +18,10 @@ const entityOptions: Option[] = [
 
 const envTypeOptions: Option[] = [
   { label: "Select a type", value: "" },
+  { label: "String", value: "string" },
+  { label: "Number", value: "number" },
+  { label: "Boolean", value: "boolean" },
   { label: "Date", value: "date" },
-  { label: "Primary ID", value: "primaryId" },
-  { label: "Unique ID", value: "uniqueId" },
 ];
 
 const defaultEntityFields = [
@@ -39,23 +40,24 @@ const defaultEnvTypeFields = [
 ];
 
 type FormProps = {
-  formName: string;
+  name: string;
   handleSetData: Function;
+  toggleSubmit: Function;
 };
 
-export const Form: FC<FormProps> = ({ formName, handleSetData }) => {
+export const Form: FC<FormProps> = ({ name, handleSetData, toggleSubmit }) => {
+  const [isGenerating, setIsGenerating] = useState(false);
   const { register, handleSubmit, control } = useForm({
-    defaultValues: { entities: defaultEntityFields },
+    defaultValues: { [name]: name === "MockData" ? defaultEntityFields : defaultEnvTypeFields },
   });
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "entities",
+    name,
   });
-  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
-    console.log(formName);
-  }, [formName]);
+    console.log(name);
+  }, [name]);
 
   const handleClick = (data: any) => {
     setIsGenerating(true);
@@ -63,7 +65,7 @@ export const Form: FC<FormProps> = ({ formName, handleSetData }) => {
 
     setTimeout(() => {
       setIsGenerating(false);
-    }, 3000);
+    }, 2000);
   };
 
   const handleAddField = () => {
@@ -92,7 +94,7 @@ export const Form: FC<FormProps> = ({ formName, handleSetData }) => {
                 registration={register(`entities.${i}.name`, { required: true })}
               />
               <SelectField
-                options={entityOptions}
+                options={name === "MockData" ? entityOptions : envTypeOptions}
                 defaultValue={field.type}
                 disabled={isGenerating}
                 registration={register(`entities.${i}.name`, { required: true })}
