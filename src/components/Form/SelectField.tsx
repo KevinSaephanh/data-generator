@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
-import { Option } from "../../types/Option";
+import Option from "../../models/Option";
 
 type SelectFieldProps = {
   options: Option[];

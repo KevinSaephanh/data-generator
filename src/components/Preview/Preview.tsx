@@ -15,7 +15,7 @@ export const Preview: FC<PreviewProps> = ({ data }) => {
   return (
     <div className="flex flex-col w-full">
       <button
-        className="bg-blue-500 hover:bg-blue-700 h-10 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 md:mr-0 ml-auto rounded mt-10 md:mt-0"
+        className="bg-indigo-500 hover:bg-indigo-700 h-10 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 md:mr-0 ml-auto rounded mt-10 md:mt-0"
         onClick={handleClick}
       >
         {hasClicked ? "Copied!" : "Copy"}

@@ -1,53 +1,25 @@
 import { FC, useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { Option } from "../../types/Option";
+import {
+  defaultEntityFields,
+  defaultEnvTypeFields,
+  entityOptions,
+  envTypeOptions,
+} from "../../constants";
+import FormField from "../../models/FormField";
 import { InputField } from "./InputField";
 import { SelectField } from "./SelectField";
 
-const entityOptions: Option[] = [
-  { label: "Select a type", value: "" },
-  { label: "Username", value: "username" },
-  { label: "First Name", value: "firstName" },
-  { label: "last Name", value: "lastName" },
-  { label: "Email", value: "email" },
-  { label: "Avatar", value: "avatar" },
-  { label: "Date", value: "date" },
-  { label: "Primary ID", value: "primaryId" },
-  { label: "Unique ID", value: "uniqueId" },
-];
-
-const envTypeOptions: Option[] = [
-  { label: "Select a type", value: "" },
-  { label: "String", value: "string" },
-  { label: "Number", value: "number" },
-  { label: "Boolean", value: "boolean" },
-  { label: "Date", value: "date" },
-];
-
-const defaultEntityFields = [
-  { name: "userId", type: "uniqueId" },
-  { name: "username", type: "username" },
-  { name: "email", type: "email" },
-  { name: "avatar", type: "avatar" },
-];
-
-const defaultEnvTypeFields = [
-  { name: "port", type: "number" },
-  { name: "node_env", type: "string" },
-  { name: "access_token_secret", type: "string" },
-  { name: "refresh_token_secret", type: "string" },
-  { name: "db_url", type: "string" },
-];
-
 type FormProps = {
   name: string;
+  index: number;
   handleSetData: Function;
   toggleSubmit: Function;
 };
 
-export const Form: FC<FormProps> = ({ name, handleSetData, toggleSubmit }) => {
+export const Form: FC<FormProps> = ({ name, handleSetData, toggleSubmit, index }) => {
   const [isGenerating, setIsGenerating] = useState(false);
-  const { register, handleSubmit, control } = useForm({
+  const { register, handleSubmit, control, watch } = useForm({
     defaultValues: { [name]: name === "MockData" ? defaultEntityFields : defaultEnvTypeFields },
   });
   const { fields, append, remove } = useFieldArray({
@@ -57,7 +29,8 @@ export const Form: FC<FormProps> = ({ name, handleSetData, toggleSubmit }) => {
 
   useEffect(() => {
     console.log(name);
-  }, [name]);
+    console.log(watch(name));
+  }, [name, watch]);
 
   const handleClick = (data: any) => {
     setIsGenerating(true);
@@ -83,7 +56,7 @@ export const Form: FC<FormProps> = ({ name, handleSetData, toggleSubmit }) => {
           <h3 className="font-semibold pb-5 pl-2 md:text-lg">Field Name</h3>
           <h3 className="font-semibold pb-5 pl-2 md:text-lg">Type</h3>
         </div>
-        {fields.map((field, i) => {
+        {fields.map((field: FormField, i: number) => {
           return (
             <div className="flex flex-row" key={i}>
               <InputField
@@ -122,7 +95,7 @@ export const Form: FC<FormProps> = ({ name, handleSetData, toggleSubmit }) => {
 
         <div className="flex flex-row">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 rounded disabled:opacity-25"
+            className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 rounded disabled:opacity-25"
             disabled={isGenerating}
             onClick={handleAddField}
           >

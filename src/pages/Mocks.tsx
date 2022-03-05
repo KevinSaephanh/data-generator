@@ -64,8 +64,8 @@ export const Mocks: FC = () => {
               .filter((key) => enumToString(key, Entities))
               .map((name, i) => (
                 <li
-                  className={`cursor-pointer p-2 rounded hover:bg-blue-500 ${
-                    name === activeEntity ? "bg-blue-200" : ""
+                  className={`cursor-pointer p-2 rounded hover:bg-indigo-500 ${
+                    name === activeEntity ? "bg-indigo-200" : ""
                   }`}
                   key={i}
                   onClick={() => setActiveEntity(name)}

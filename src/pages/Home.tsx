@@ -46,7 +46,8 @@ export const Home: FC = () => {
                 .filter((key) => enumToString(key, Tabs))
                 .map((name, i) => (
                   <li
-                    className="block text-lg font-semibold ml-4 md:ml-0 px-2 md:px-2 py-2 rounded hover:border-transparent hover:bg-blue-400 focus:border-transparent active cursor-pointer"
+                    className={`block text-lg font-semibold ml-4 md:ml-0 px-2 md:px-2 py-2 rounded md:hover:bg-gray-200 cursor-pointer
+                    ${name === activeTab ? "border-b-4 border-indigo-500" : ""}`}
                     role="tab"
                     aria-controls={`tabs-${name}`}
                     aria-selected="true"
@@ -61,6 +62,7 @@ export const Home: FC = () => {
             {activeTab === Tabs[Tabs.MockData] ? (
               <Form
                 key={1}
+                index={1}
                 name={activeTab}
                 handleSetData={handleSetData}
                 toggleSubmit={toggleSubmit}
@@ -68,6 +70,7 @@ export const Home: FC = () => {
             ) : (
               <Form
                 key={2}
+                index={1}
                 name={activeTab}
                 handleSetData={handleSetData}
                 toggleSubmit={toggleSubmit}
