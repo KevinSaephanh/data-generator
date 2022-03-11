@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { ExitButton } from "../Buttons/ExitButton";
 
 export const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,37 +39,9 @@ export const Navbar: FC = () => {
             onClick={() => setIsOpen(!isOpen)}
           >
             {!isOpen ? (
-              <svg
-                className="block h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
+              <ExitButton path={"M4 6h16M4 12h16M4 18h16"} handleClick={() => {}} />
             ) : (
-              <svg
-                className="block h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <ExitButton path={"M6 18L18 6M6 6l12 12"} handleClick={() => {}} />
             )}
           </button>
         </div>

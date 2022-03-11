@@ -22,16 +22,16 @@ export const envTypeOptions: Option[] = [
 ];
 
 export const defaultEntityFields: FormField[] = [
-  { name: "userId", type: "uniqueId" },
-  { name: "username", type: "username" },
-  { name: "email", type: "email" },
-  { name: "avatar", type: "avatar" },
+  { name: "userId", type: "" },
+  { name: "username", type: "" },
+  { name: "email", type: "" },
+  { name: "avatar", type: "" },
 ];
 
 export const defaultEnvTypeFields: FormField[] = [
-  { name: "port", type: "number" },
-  { name: "node_env", type: "string" },
-  { name: "access_token_secret", type: "string" },
-  { name: "refresh_token_secret", type: "string" },
-  { name: "db_url", type: "string" },
+  { name: "port", type: "" },
+  { name: "node_env", type: "" },
+  { name: "access_token_secret", type: "" },
+  { name: "refresh_token_secret", type: "" },
+  { name: "db_url", type: "" },
 ];

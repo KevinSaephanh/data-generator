@@ -1,6 +1,8 @@
 import { FC, useState } from "react";
-import { Form } from "../components/Form/Form";
+import { EntityForm } from "../components/Form/EntityForm";
 import { Preview } from "../components/Preview/Preview";
+import { defaultEntityFields, defaultEnvTypeFields } from "../constants";
+import FormField from "../models/FormField";
 import { enumToString } from "../utils/enumToString";
 
 enum Tabs {
@@ -11,16 +13,22 @@ enum Tabs {
 export const Home: FC = () => {
   const [activeTab, setActiveTab] = useState(Tabs[Tabs.MockData]);
   const [submitted, setSubmitted] = useState(false);
-  const [entityData, setEntityData] = useState<any[]>([]);
-  const [envTypeData, setEnvTypeData] = useState<any[]>([]);
+  const [entityData, setEntityData] = useState(defaultEntityFields);
+  const [envTypeData, setEnvTypeData] = useState(defaultEnvTypeFields);
 
-  const handleSetData = (value: any[]) => {
+  const handleSetData = (value: FormField[]) => {
     if (activeTab === Tabs[Tabs.MockData]) setEntityData(value);
     else setEnvTypeData(value);
+    console.log(entityData);
   };
 
   const toggleSubmit = () => {
     setSubmitted(!submitted);
+  };
+
+  const getPreviewData = () => {
+    if (submitted) return activeTab === Tabs[Tabs.MockData] ? entityData : envTypeData;
+    return [];
   };
 
   return (
@@ -58,26 +66,14 @@ export const Home: FC = () => {
                   </li>
                 ))}
             </ul>
-            {/* Toggle between 2 forms depending on form name */}
-            {activeTab === Tabs[Tabs.MockData] ? (
-              <Form
-                key={1}
-                index={1}
-                name={activeTab}
-                handleSetData={handleSetData}
-                toggleSubmit={toggleSubmit}
-              />
-            ) : (
-              <Form
-                key={2}
-                index={1}
-                name={activeTab}
-                handleSetData={handleSetData}
-                toggleSubmit={toggleSubmit}
-              />
-            )}
+            <EntityForm
+              entityData={entityData}
+              name={activeTab}
+              handleSetData={handleSetData}
+              toggleSubmit={toggleSubmit}
+            />
           </div>
-          <Preview data={activeTab === Tabs[Tabs.MockData] ? entityData : envTypeData} />
+          <Preview data={getPreviewData()} />
         </div>
       </section>
     </>
