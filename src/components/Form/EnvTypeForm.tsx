@@ -1,106 +1,62 @@
-import { FC, useEffect, useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
-import { entityOptions, envTypeOptions } from "../../constants";
-import FormField from "../../models/FormField";
-import { ExitButton } from "../Buttons/ExitButton";
+import { ChangeEvent, FC, useRef, useState } from "react";
 import { FormButton } from "../Buttons/FormButton";
-import { FormHeader } from "./FormHeader";
-import { InputField } from "./InputField";
-import { SelectField } from "./SelectField";
+import fileImage from "../../assets/fileImage.png";
 
 type EnvTypeFormProps = {
   name: string;
-  envTypeData: FormField[];
   handleSetData: Function;
   toggleSubmit: Function;
 };
 
-export const EnvTypeForm: FC<EnvTypeFormProps> = ({
-  name,
-  envTypeData,
-  handleSetData,
-  toggleSubmit,
-}) => {
-  const [isGenerating, setIsGenerating] = useState(false);
-  const { register, handleSubmit, control } = useForm({
-    defaultValues: { [name]: envTypeData },
-    shouldUnregister: false,
-  });
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name,
-  });
+export const EnvTypeForm: FC<EnvTypeFormProps> = ({ name, handleSetData, toggleSubmit }) => {
+  const fileInputField = useRef(null);
+  const [file, setFile] = useState<File>();
 
-  // useEffect(() => {
-  //   console.log(name);
-  //   console.log(watch(name));
-  // }, [name, watch]);
-
-  const handleClick = (data: any) => {
-    setIsGenerating(true);
-    console.log(data);
-
-    setTimeout(() => {
-      setIsGenerating(false);
-    }, 2000);
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newFile = e.target.files![0];
+    setFile(newFile);
   };
 
-  const handleAddField = () => {
-    append({ name: "Enter env variable name", type: "" });
-  };
+  const handleClick = async () => {
+    const reader = new FileReader();
+    reader.onload = async () => {
+      console.log(file);
+    };
 
-  const handleDeleteField = (index: number) => {
-    console.log(envTypeData);
-    console.log(fields);
-    remove(index);
-    console.log(fields);
-    handleSetData(fields);
+    reader.readAsText(file as File);
   };
 
   return (
-    <form className="w-11/12 md:w-full mx-auto flex flex-col min-h-96">
-      <div className="flex flex-col">
-        <FormHeader />
-        {fields.map((field: FormField, key: number) => {
-          return (
-            <div className="flex flex-row" key={key}>
-              <InputField
-                placeholder={field.name}
-                defaultValue={""}
-                pattern={"[A-Za-z0-9-_]+"}
-                disabled={isGenerating}
-                registration={register(`entities.${key}.name`, { required: true })}
-              />
-              <SelectField
-                options={entityOptions}
-                defaultValue={field.type}
-                disabled={isGenerating}
-                registration={register(`entities.${key}.name`, { required: true })}
-              />
-              <ExitButton key={key} path={"M6 18L18 6M6 6l12 12"} handleClick={handleDeleteField} />
-            </div>
-          );
-        })}
-
-        <div className="flex flex-row">
-          <FormButton
-            text={"Add Field"}
-            type={"button"}
-            className={
-              "bg-indigo-500 hover:bg-indigo-700 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 rounded disabled:opacity-25"
-            }
-            disabled={isGenerating}
-            handleClick={handleAddField}
-          />
-          <button
-            type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mb-5 rounded disabled:opacity-25"
-            disabled={isGenerating}
-            onClick={handleSubmit((data) => handleClick(data))}
-          >
-            Generate
-          </button>
+    <form className="w-11/12 md:w-500 md:min-w-11/12 mx-auto flex flex-col min-h-96">
+      <img
+        id="background"
+        src={fileImage}
+        className="h-44object-cover transition duration-300"
+        alt=""
+      />
+      <div className="m-auto py-6 sm:px-0 flex flex-col justify-center items-center">
+        <input type="file" ref={fileInputField} onChange={handleFileChange} />
+        <div className="space-y-6 text-center">
+          <p className="text-gray-700 text-lg font-semibold">
+            Drag and drop a file or
+            <label
+              htmlFor="dragOver"
+              title="Upload a file"
+              className="relative cursor-pointer text-blue-500 hover:text-blue-600 block"
+            >
+              Upload a file
+            </label>
+          </p>
         </div>
+        <FormButton
+          text={"Generate"}
+          type={"button"}
+          className={
+            "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mt-5 rounded disabled:opacity-25"
+          }
+          disabled={false}
+          handleClick={handleClick}
+        />
       </div>
     </form>
   );

@@ -1,16 +1,15 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { entityOptions, envTypeOptions } from "../../constants";
+import { entityOptions } from "../../constants";
 import FormField from "../../models/FormField";
 import { ExitButton } from "../Buttons/ExitButton";
 import { FormButton } from "../Buttons/FormButton";
-import { FormHeader } from "./FormHeader";
 import { InputField } from "./InputField";
 import { SelectField } from "./SelectField";
 
 type EntityFormProps = {
   name: string;
-  entityData: any[];
+  entityData: FormField[];
   handleSetData: Function;
   toggleSubmit: Function;
 };
@@ -58,9 +57,12 @@ export const EntityForm: FC<EntityFormProps> = ({
   };
 
   return (
-    <form className="w-11/12 md:w-full mx-auto flex flex-col min-h-96">
+    <form className="w-11/12 md:w-500 mx-auto flex flex-col min-h-96">
       <div className="flex flex-col">
-        <FormHeader />
+        <div className="flex flex-row space-x-24 md:space-x-40 mr-5 md:mr-10">
+          <h3 className="font-semibold pb-5 pl-2 md:text-lg">Field Name</h3>
+          <h3 className="font-semibold pb-5 pl-2 md:text-lg">Type</h3>
+        </div>
         {fields.map((field: FormField, key: number) => {
           return (
             <div className="flex flex-row" key={key}>

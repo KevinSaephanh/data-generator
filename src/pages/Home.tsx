@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { EntityForm } from "../components/Form/EntityForm";
+import { EnvTypeForm } from "../components/Form/EnvTypeForm";
 import { Preview } from "../components/Preview/Preview";
 import { defaultEntityFields, defaultEnvTypeFields } from "../constants";
 import FormField from "../models/FormField";
@@ -66,8 +67,13 @@ export const Home: FC = () => {
                   </li>
                 ))}
             </ul>
-            <EntityForm
+            {/* <EntityForm
               entityData={entityData}
+              name={activeTab}
+              handleSetData={handleSetData}
+              toggleSubmit={toggleSubmit}
+            /> */}
+            <EnvTypeForm
               name={activeTab}
               handleSetData={handleSetData}
               toggleSubmit={toggleSubmit}
