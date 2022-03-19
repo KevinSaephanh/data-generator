@@ -2,10 +2,11 @@ import { ChangeEvent, useContext, useRef, useState } from "react";
 import { FormButton } from "../Buttons/FormButton";
 import fileImage from "../../assets/fileImage.png";
 import { AppContext } from "../../store/AppProvider";
+import { Tabs } from "../../constants";
 
 export const EnvTypeForm = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { isGeneratingPreview } = state;
+  const { activeTab, isGeneratingPreview } = state;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File>();
 
@@ -35,7 +36,11 @@ export const EnvTypeForm = () => {
   };
 
   return (
-    <form className="w-11/12 md:w-500 md:min-w-11/12 mx-auto flex flex-col min-h-96">
+    <form
+      className={`w-11/12 mx-auto flex flex-col min-h-96 ${
+        activeTab === Tabs[Tabs.EnvTypes] ? "block" : "hidden"
+      }`}
+    >
       <img
         id="background"
         src={fileImage}

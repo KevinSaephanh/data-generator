@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { defaultEntityFields, entityOptions } from "../../constants";
+import { defaultEntityFields, entityOptions, Tabs } from "../../constants";
 import FormField from "../../models/FormField";
 import { AppContext } from "../../store/AppProvider";
 import { ExitButton } from "../Buttons/ExitButton";
@@ -10,7 +10,7 @@ import { SelectField } from "./SelectField";
 
 export const EntityForm = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { isGeneratingPreview } = state;
+  const { activeTab, isGeneratingPreview } = state;
   const { register, handleSubmit, control } = useForm({
     defaultValues: { entities: defaultEntityFields },
     shouldUnregister: false,
@@ -25,7 +25,11 @@ export const EntityForm = () => {
   };
 
   return (
-    <form className="w-11/12 md:w-500 mx-auto flex flex-col min-h-96">
+    <form
+      className={`w-11/12 flex flex-col min-h-96 mx-auto md:mx-0 ${
+        activeTab === Tabs[Tabs.MockData] ? "block" : "hidden"
+      }`}
+    >
       <div className="flex flex-col">
         <div className="flex flex-row space-x-24 md:space-x-40 mr-5 md:mr-10">
           <h3 className="font-semibold pb-5 pl-2 md:text-lg">Field Name</h3>

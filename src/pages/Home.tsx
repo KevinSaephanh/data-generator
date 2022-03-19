@@ -37,7 +37,7 @@ export const Home: FC = () => {
         <div className="flex flex-col md:flex-row md:p-10">
           <div className="flex flex-col">
             {/* Tabs List */}
-            <ul className="flex flex-row flex-wrap list-none border-b-0 mb-4" role="tablist">
+            <ul className="flex list-none border-b-0 mb-4 md:mb-6" role="tablist">
               {Object.keys(Tabs)
                 .filter((key) => enumToString(key, Tabs))
                 .map((name, i) => (
@@ -56,8 +56,10 @@ export const Home: FC = () => {
             </ul>
 
             {/* Forms */}
-            <EntityForm />
-            <EnvTypeForm />
+            <div className="relative">
+              <EntityForm />
+              <EnvTypeForm />
+            </div>
           </div>
 
           <Preview />

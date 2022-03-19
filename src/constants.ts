@@ -27,10 +27,10 @@ export const envTypeOptions: Option[] = [
 ];
 
 export const defaultEntityFields: FormField[] = [
-  { name: "userId", type: "" },
-  { name: "username", type: "" },
-  { name: "email", type: "" },
-  { name: "avatar", type: "" },
+  { name: "userId", type: "PrimaryId" },
+  { name: "username", type: "Username" },
+  { name: "email", type: "Email" },
+  { name: "avatar", type: "Avatar" },
 ];
 
 export const defaultEnvTypeFields: FormField[] = [
