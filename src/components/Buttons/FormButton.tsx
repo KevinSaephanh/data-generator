@@ -17,7 +17,12 @@ export const FormButton: FC<FormButtonProps> = ({
 }) => {
   return (
     <>
-      <button type={type} className={className} disabled={disabled} onClick={() => handleClick()}>
+      <button
+        type={type}
+        className={`${className} disabled:opacity-25`}
+        disabled={disabled}
+        onClick={() => handleClick()}
+      >
         {text}
       </button>
     </>

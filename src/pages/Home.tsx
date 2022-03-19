@@ -67,17 +67,8 @@ export const Home: FC = () => {
                   </li>
                 ))}
             </ul>
-            {/* <EntityForm
-              entityData={entityData}
-              name={activeTab}
-              handleSetData={handleSetData}
-              toggleSubmit={toggleSubmit}
-            /> */}
-            <EnvTypeForm
-              name={activeTab}
-              handleSetData={handleSetData}
-              toggleSubmit={toggleSubmit}
-            />
+            <EntityForm name={activeTab} />
+            <EnvTypeForm name={activeTab} />
           </div>
           <Preview data={getPreviewData()} />
         </div>

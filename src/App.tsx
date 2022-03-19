@@ -1,11 +1,14 @@
 import { AppRoutes } from "./routes";
 import { Layout } from "./components/Layout/Layout";
 import "./App.css";
+import { AppProvider } from "./store/AppProvider";
 
 function App() {
   return (
     <Layout>
-      <AppRoutes />
+      <AppProvider>
+        <AppRoutes />
+      </AppProvider>
     </Layout>
   );
 }
