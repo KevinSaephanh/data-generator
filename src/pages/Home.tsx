@@ -1,35 +1,21 @@
-import { FC, useState } from "react";
+import { FC, useContext } from "react";
 import { EntityForm } from "../components/Form/EntityForm";
 import { EnvTypeForm } from "../components/Form/EnvTypeForm";
 import { Preview } from "../components/Preview/Preview";
-import { defaultEntityFields, defaultEnvTypeFields } from "../constants";
-import FormField from "../models/FormField";
+import { Tabs } from "../constants";
+import { UPDATE_ACTIVE_TAB } from "../store/ActionTypes";
+import { AppContext } from "../store/AppProvider";
 import { enumToString } from "../utils/enumToString";
 
-enum Tabs {
-  MockData,
-  EnvTypes,
-}
-
 export const Home: FC = () => {
-  const [activeTab, setActiveTab] = useState(Tabs[Tabs.MockData]);
-  const [submitted, setSubmitted] = useState(false);
-  const [entityData, setEntityData] = useState(defaultEntityFields);
-  const [envTypeData, setEnvTypeData] = useState(defaultEnvTypeFields);
+  const { state, dispatch } = useContext(AppContext);
+  const { activeTab } = state;
 
-  const handleSetData = (value: FormField[]) => {
-    if (activeTab === Tabs[Tabs.MockData]) setEntityData(value);
-    else setEnvTypeData(value);
-    console.log(entityData);
-  };
-
-  const toggleSubmit = () => {
-    setSubmitted(!submitted);
-  };
-
-  const getPreviewData = () => {
-    if (submitted) return activeTab === Tabs[Tabs.MockData] ? entityData : envTypeData;
-    return [];
+  const handleClick = (e: any, name: string) => {
+    dispatch({
+      type: UPDATE_ACTIVE_TAB,
+      payload: name,
+    });
   };
 
   return (
@@ -50,6 +36,7 @@ export const Home: FC = () => {
       <section className="relative w-full md:w-11/12 md:mx-auto">
         <div className="flex flex-col md:flex-row md:p-10">
           <div className="flex flex-col">
+            {/* Tabs List */}
             <ul className="flex flex-row flex-wrap list-none border-b-0 mb-4" role="tablist">
               {Object.keys(Tabs)
                 .filter((key) => enumToString(key, Tabs))
@@ -61,16 +48,19 @@ export const Home: FC = () => {
                     aria-controls={`tabs-${name}`}
                     aria-selected="true"
                     key={i}
-                    onClick={() => setActiveTab(enumToString(name, Tabs))}
+                    onClick={(e) => handleClick(e, name)}
                   >
                     {name}
                   </li>
                 ))}
             </ul>
-            <EntityForm name={activeTab} />
-            <EnvTypeForm name={activeTab} />
+
+            {/* Forms */}
+            <EntityForm />
+            <EnvTypeForm />
           </div>
-          <Preview data={getPreviewData()} />
+
+          <Preview />
         </div>
       </section>
     </>

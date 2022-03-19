@@ -1,15 +1,22 @@
-import { FC, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { Tabs } from "../../constants";
+import { AppContext } from "../../store/AppProvider";
 
-type PreviewProps = {
-  data: any[];
-};
-
-export const Preview: FC<PreviewProps> = ({ data }) => {
+export const Preview = () => {
+  const { activeTab, entityPreview, envTypesPreview } = useContext(AppContext).state;
   const [hasClicked, setHasclicked] = useState(false);
+  const [preview, setPreview] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (activeTab === Tabs[Tabs.MockData]) setPreview(entityPreview);
+    else setPreview(envTypesPreview);
+  }, [activeTab, entityPreview, envTypesPreview]);
 
   const handleClick = () => {
     setHasclicked(true);
-    navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+    if (activeTab === Tabs[Tabs.MockData])
+      navigator.clipboard.writeText(JSON.stringify(entityPreview, null, 2));
+    else navigator.clipboard.writeText(JSON.stringify(envTypesPreview, null, 2));
   };
 
   return (
@@ -21,7 +28,7 @@ export const Preview: FC<PreviewProps> = ({ data }) => {
         {hasClicked ? "Copied!" : "Copy"}
       </button>
       <div className="h-550 w-11/12 max-w-700 md:w-10/12 md:text-lg md:mr-0 md:ml-auto overflow-y-scroll p-2 md:p-5 rounded border-2 border-gray-800 mx-auto">
-        {data.length > 0 ? <pre>{JSON.stringify(data, null, 2)}</pre> : <></>}
+        {preview.length > 0 ? <pre>{JSON.stringify(preview, null, 2)}</pre> : null}
       </div>
     </div>
   );

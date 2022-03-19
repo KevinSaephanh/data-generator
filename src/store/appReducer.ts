@@ -2,6 +2,7 @@ import {
   AppActions,
   GENERATE_PREVIEW_REQUEST,
   GENERATE_PREVIEW_SUCCESS,
+  UPDATE_ACTIVE_TAB,
   UPDATE_ENTITY_PREVIEW,
   UPDATE_ENV_TYPES_PREVIEW,
 } from "./ActionTypes";
@@ -9,6 +10,8 @@ import { initialState } from "./AppState";
 
 export const appReducer = (state = initialState, action: AppActions) => {
   switch (action.type) {
+    case UPDATE_ACTIVE_TAB:
+      return { ...state, activeTab: action.payload };
     case UPDATE_ENTITY_PREVIEW:
       return { ...state, entityPreview: action.payload, isGenerating: false };
     case UPDATE_ENV_TYPES_PREVIEW:

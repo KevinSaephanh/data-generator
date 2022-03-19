@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Preview } from "../components/Preview/Preview";
 import {
   createComments,
@@ -7,6 +7,8 @@ import {
   createProducts,
   createUsers,
 } from "../staticDataGenerator";
+import { UPDATE_ENTITY_PREVIEW } from "../store/ActionTypes";
+import { AppContext } from "../store/AppProvider";
 import { enumToString } from "../utils/enumToString";
 
 enum Entities {
@@ -17,29 +19,48 @@ enum Entities {
   Products,
 }
 
-export const Mocks: FC = () => {
-  const [data, setData] = useState<any>(createUsers());
+export const Mocks = () => {
+  const { dispatch } = useContext(AppContext);
   const [activeEntity, setActiveEntity] = useState(Entities[Entities.Users]);
 
   useEffect(() => {
     switch (activeEntity) {
       case Entities[Entities.Users]:
-        setData(createUsers());
-        return;
+        dispatch({
+          type: UPDATE_ENTITY_PREVIEW,
+          payload: createUsers(),
+        });
+        break;
       case Entities[Entities.Posts]:
-        setData(createPosts());
-        return;
+        dispatch({
+          type: UPDATE_ENTITY_PREVIEW,
+          payload: createPosts(),
+        });
+        break;
       case Entities[Entities.Comments]:
-        setData(createComments());
-        return;
+        dispatch({
+          type: UPDATE_ENTITY_PREVIEW,
+          payload: createComments(),
+        });
+        break;
       case Entities[Entities.Products]:
-        setData(createProducts());
-        return;
+        dispatch({
+          type: UPDATE_ENTITY_PREVIEW,
+          payload: createProducts(),
+        });
+        break;
       case Entities[Entities.Orders]:
-        setData(createOrders());
-        return;
+        dispatch({
+          type: UPDATE_ENTITY_PREVIEW,
+          payload: createOrders(),
+        });
+        break;
       default:
-        return;
+        dispatch({
+          type: UPDATE_ENTITY_PREVIEW,
+          payload: createUsers(),
+        });
+        break;
     }
   }, [activeEntity]);
 
@@ -74,7 +95,7 @@ export const Mocks: FC = () => {
                 </li>
               ))}
           </ul>
-          <Preview data={data} />
+          <Preview />
         </div>
       </section>
     </>

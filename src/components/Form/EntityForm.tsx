@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { useContext } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { defaultEntityFields, entityOptions } from "../../constants";
 import FormField from "../../models/FormField";
@@ -8,20 +8,16 @@ import { FormButton } from "../Buttons/FormButton";
 import { InputField } from "./InputField";
 import { SelectField } from "./SelectField";
 
-type EntityFormProps = {
-  name: string;
-};
-
-export const EntityForm: FC<EntityFormProps> = ({ name }) => {
+export const EntityForm = () => {
   const { state, dispatch } = useContext(AppContext);
   const { isGeneratingPreview } = state;
   const { register, handleSubmit, control } = useForm({
-    defaultValues: { [name]: defaultEntityFields },
+    defaultValues: { entities: defaultEntityFields },
     shouldUnregister: false,
   });
   const { fields, append, remove } = useFieldArray({
     control,
-    name,
+    name: "entities",
   });
 
   const handleClick = (data: any) => {

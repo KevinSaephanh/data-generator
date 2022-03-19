@@ -1,8 +1,9 @@
 import { createContext, Dispatch, FC, useReducer } from "react";
+import { AppActions } from "./ActionTypes";
 import { appReducer } from "./appReducer";
 import { AppState, initialState } from "./AppState";
 
-export const AppContext = createContext<{ state: AppState; dispatch: Dispatch<any> }>({
+export const AppContext = createContext<{ state: AppState; dispatch: Dispatch<AppActions> }>({
   state: initialState,
   dispatch: () => null,
 });

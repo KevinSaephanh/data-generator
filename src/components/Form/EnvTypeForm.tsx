@@ -1,13 +1,9 @@
-import { ChangeEvent, FC, useContext, useRef, useState } from "react";
+import { ChangeEvent, useContext, useRef, useState } from "react";
 import { FormButton } from "../Buttons/FormButton";
 import fileImage from "../../assets/fileImage.png";
 import { AppContext } from "../../store/AppProvider";
 
-type EnvTypeFormProps = {
-  name: string;
-};
-
-export const EnvTypeForm: FC<EnvTypeFormProps> = ({ name }) => {
+export const EnvTypeForm = () => {
   const { state, dispatch } = useContext(AppContext);
   const { isGeneratingPreview } = state;
   const fileInputRef = useRef<HTMLInputElement>(null);
