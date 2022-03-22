@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import { defaultEntityFields, entityOptions, Tabs } from "../../constants";
+import { defaultEntityFields, entityOptions } from "../../constants";
 import FormField from "../../models/FormField";
 import { AppContext } from "../../store/AppProvider";
 import { ExitButton } from "../Buttons/ExitButton";
 import { FormButton } from "../Buttons/FormButton";
+import { Tabs } from "../TabList/TabList";
 import { InputField } from "./InputField";
 import { SelectField } from "./SelectField";
 

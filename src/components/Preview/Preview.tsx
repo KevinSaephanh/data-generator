@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { Tabs } from "../../constants";
 import { AppContext } from "../../store/AppProvider";
+import { Tabs } from "../TabList/TabList";
 
 export const Preview = () => {
   const { activeTab, entityPreview, envTypesPreview } = useContext(AppContext).state;

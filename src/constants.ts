@@ -1,11 +1,6 @@
 import FormField from "./models/FormField";
 import Option from "./models/Option";
 
-export enum Tabs {
-  MockData,
-  EnvTypes,
-}
-
 export const entityOptions: Option[] = [
   { label: "Select a type", value: "" },
   { label: "Username", value: "username" },

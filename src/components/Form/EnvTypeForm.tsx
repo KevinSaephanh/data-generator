@@ -2,7 +2,7 @@ import { ChangeEvent, useContext, useRef, useState } from "react";
 import { FormButton } from "../Buttons/FormButton";
 import fileImage from "../../assets/fileImage.png";
 import { AppContext } from "../../store/AppProvider";
-import { Tabs } from "../../constants";
+import { Tabs } from "../TabList/TabList";
 
 export const EnvTypeForm = () => {
   const { state, dispatch } = useContext(AppContext);

@@ -1,4 +1,4 @@
-import { Tabs } from "../constants";
+import { Tabs } from "../components/TabList/TabList";
 
 export interface AppState {
   activeTab: string;
