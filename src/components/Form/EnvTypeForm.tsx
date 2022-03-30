@@ -6,7 +6,7 @@ import { Tabs } from "../TabList/TabList";
 
 export const EnvTypeForm = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { activeTab, isGeneratingPreview } = state;
+  const { activeTab, isReadyToGenerate, isGeneratingPreview } = state;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File>();
 
@@ -68,7 +68,7 @@ export const EnvTypeForm = () => {
           className={
             "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mt-5 rounded"
           }
-          disabled={!file || isGeneratingPreview}
+          disabled={!file || isReadyToGenerate || isGeneratingPreview}
           handleClick={handleButtonClick}
         />
       </div>

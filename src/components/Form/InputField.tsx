@@ -3,7 +3,7 @@ import { UseFormRegisterReturn } from "react-hook-form";
 
 type InputFieldProps = {
   placeholder?: any;
-  defaultValue: string;
+  defaultValue?: string;
   pattern?: string;
   disabled?: boolean;
   registration: Partial<UseFormRegisterReturn>;
@@ -16,6 +16,10 @@ export const InputField: FC<InputFieldProps> = ({
   disabled,
   registration,
 }) => {
+  const handleChange = (e: any) => {
+    console.log(e);
+  };
+
   return (
     <input
       placeholder={placeholder}
@@ -26,6 +30,9 @@ export const InputField: FC<InputFieldProps> = ({
       minLength={1}
       maxLength={20}
       {...registration}
+      // onChange={e => {
+      //   registration.onChange(e)
+      // }}
     />
   );
 };

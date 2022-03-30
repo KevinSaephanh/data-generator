@@ -11,7 +11,7 @@ import { SelectField } from "./SelectField";
 
 export const EntityForm = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { activeTab, isGeneratingPreview } = state;
+  const { activeTab, isReadyToGenerate, isGeneratingPreview } = state;
   const { register, handleSubmit, control } = useForm({
     defaultValues: { entities: defaultEntityFields },
     shouldUnregister: false,
@@ -21,7 +21,11 @@ export const EntityForm = () => {
     name: "entities",
   });
 
-  const handleClick = (data: any) => {
+  const handleInputChange = (e: any) => {
+    console.log(e);
+  };
+
+  const onSubmit = (data: any) => {
     console.log(data);
   };
 
@@ -30,6 +34,7 @@ export const EntityForm = () => {
       className={`w-11/12 flex flex-col min-h-96 mx-auto md:mx-0 ${
         activeTab === Tabs[Tabs.MockData] ? "block" : "hidden"
       }`}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col">
         <div className="flex flex-row space-x-24 md:space-x-40 mr-5 md:mr-10">
@@ -40,8 +45,7 @@ export const EntityForm = () => {
           return (
             <div className="flex flex-row" key={key}>
               <InputField
-                placeholder={field.name}
-                defaultValue={""}
+                placeholder={"Enter entity name"}
                 pattern={"[A-Za-z0-9-_]+"}
                 disabled={isGeneratingPreview}
                 registration={register(`entities.${key}.name`, { required: true })}
@@ -65,16 +69,17 @@ export const EntityForm = () => {
               "bg-indigo-500 hover:bg-indigo-700 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 rounded"
             }
             disabled={isGeneratingPreview}
-            handleClick={() => append({ name: "Enter entity name", type: "" })}
+            handleClick={() => append({ name: "", type: "" })}
           />
-          <button
-            type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mb-5 rounded disabled:opacity-25"
-            disabled={isGeneratingPreview}
-            onClick={handleSubmit((data) => handleClick(data))}
-          >
-            Generate
-          </button>
+          <FormButton
+            text={"Generate"}
+            type={"submit"}
+            className={
+              "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mb-5 rounded disabled:opacity-25"
+            }
+            disabled={!isReadyToGenerate || isGeneratingPreview}
+            handleClick={() => {}}
+          />
         </div>
       </div>
     </form>
