@@ -3,6 +3,7 @@ import { FormButton } from "../Buttons/FormButton";
 import fileImage from "../../assets/fileImage.png";
 import { AppContext } from "../../store/AppProvider";
 import { Tabs } from "../TabList/TabList";
+import { UPDATE_ENV_TYPES_PREVIEW } from "../../store/ActionTypes";
 
 export const EnvTypeForm = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -24,16 +25,15 @@ export const EnvTypeForm = () => {
     // Check type of file
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      console.log(e.target.result);
+      dispatch({
+        type: UPDATE_ENV_TYPES_PREVIEW,
+        payload: e.target.result,
+      });
     };
     reader.readAsText(file!);
   };
 
-  const parseEnvFile = () => {
-    // BrowserFS.
-    // const data = readFileSync("./.env", "utf-8");
-    // console.log(data);
-  };
+  const parseEnvFile = () => {};
 
   return (
     <form
