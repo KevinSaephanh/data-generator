@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { defaultEntityFields, entityOptions } from "../../constants";
-import FormField from "../../models/FormField";
+import KeyValuePair from "../../models/KeyValuePair";
 import { AppContext } from "../../store/AppProvider";
 import { ExitButton } from "../Buttons/ExitButton";
 import { FormButton } from "../Buttons/FormButton";
@@ -21,10 +21,6 @@ export const EntityForm = () => {
     name: "entities",
   });
 
-  const handleInputChange = (e: any) => {
-    console.log(e);
-  };
-
   const onSubmit = (data: any) => {
     console.log(data);
   };
@@ -41,22 +37,26 @@ export const EntityForm = () => {
           <h3 className="font-semibold pb-5 pl-2 md:text-lg">Field Name</h3>
           <h3 className="font-semibold pb-5 pl-2 md:text-lg">Type</h3>
         </div>
-        {fields.map((field: FormField, key: number) => {
+        {fields.map((field: KeyValuePair, index: number) => {
           return (
-            <div className="flex flex-row" key={key}>
+            <div className="flex flex-row" key={index}>
               <InputField
                 placeholder={"Enter entity name"}
                 pattern={"[A-Za-z0-9-_]+"}
                 disabled={isGeneratingPreview}
-                registration={register(`entities.${key}.name`, { required: true })}
+                registration={register(`entities.${index}.key`, { required: true })}
               />
               <SelectField
                 options={entityOptions}
-                defaultValue={field.type}
+                defaultValue={field.value}
                 disabled={isGeneratingPreview}
-                registration={register(`entities.${key}.name`, { required: true })}
+                registration={register(`entities.${index}.key`, { required: true })}
               />
-              <ExitButton key={key} path={"M6 18L18 6M6 6l12 12"} handleClick={() => remove(key)} />
+              <ExitButton
+                key={index}
+                path={"M6 18L18 6M6 6l12 12"}
+                handleClick={() => remove(index)}
+              />
             </div>
           );
         })}
@@ -69,7 +69,7 @@ export const EntityForm = () => {
               "bg-indigo-500 hover:bg-indigo-700 text-white font-bold w-32 py-2 px-4 mb-5 mr-5 rounded"
             }
             disabled={isGeneratingPreview}
-            handleClick={() => append({ name: "", type: "" })}
+            handleClick={() => append({ key: "", value: "" })}
           />
           <FormButton
             text={"Generate"}

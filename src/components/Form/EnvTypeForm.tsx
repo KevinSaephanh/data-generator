@@ -21,19 +21,19 @@ export const EnvTypeForm = () => {
   };
 
   const handleButtonClick = async () => {
-    parseEnvFile();
-    // Check type of file
     const reader = new FileReader();
+    const arr: string[] = [];
     reader.onload = (e: any) => {
-      dispatch({
-        type: UPDATE_ENV_TYPES_PREVIEW,
-        payload: e.target.result,
-      });
+      // Split file text by line and push to array
+      e.target.result.split(/\r\n/).map((line: string) => arr.push(line));
+
+      // dispatch({
+      //   type: UPDATE_ENV_TYPES_PREVIEW,
+      //   payload: arr,
+      // });
     };
     reader.readAsText(file!);
   };
-
-  const parseEnvFile = () => {};
 
   return (
     <form

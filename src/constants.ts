@@ -1,37 +1,36 @@
-import FormField from "./models/FormField";
-import Option from "./models/Option";
+import KeyValuePair from "./models/KeyValuePair";
 
-export const entityOptions: Option[] = [
-  { label: "Select a type", value: "" },
-  { label: "Username", value: "username" },
-  { label: "First Name", value: "firstName" },
-  { label: "last Name", value: "lastName" },
-  { label: "Email", value: "email" },
-  { label: "Avatar", value: "avatar" },
-  { label: "Date", value: "date" },
-  { label: "Primary ID", value: "primaryId" },
-  { label: "Unique ID", value: "uniqueId" },
+export const entityOptions: KeyValuePair[] = [
+  { key: "Select a value", value: "" },
+  { key: "Userkey", value: "userkey" },
+  { key: "First key", value: "firstkey" },
+  { key: "last key", value: "lastkey" },
+  { key: "Email", value: "email" },
+  { key: "Avatar", value: "avatar" },
+  { key: "Date", value: "date" },
+  { key: "Primary ID", value: "primaryId" },
+  { key: "Unique ID", value: "uniqueId" },
 ];
 
-export const envTypeOptions: Option[] = [
-  { label: "Select a type", value: "" },
-  { label: "String", value: "string" },
-  { label: "Number", value: "number" },
-  { label: "Boolean", value: "boolean" },
-  { label: "Date", value: "date" },
+export const envvalueOptions: KeyValuePair[] = [
+  { key: "Select a value", value: "" },
+  { key: "String", value: "string" },
+  { key: "Number", value: "number" },
+  { key: "Boolean", value: "boolean" },
+  { key: "Date", value: "date" },
 ];
 
-export const defaultEntityFields: FormField[] = [
-  { name: "userId", type: "PrimaryId" },
-  { name: "username", type: "Username" },
-  { name: "email", type: "Email" },
-  { name: "avatar", type: "Avatar" },
+export const defaultEntityFields: KeyValuePair[] = [
+  { key: "userId", value: "PrimaryId" },
+  { key: "userkey", value: "Userkey" },
+  { key: "email", value: "Email" },
+  { key: "avatar", value: "Avatar" },
 ];
 
-export const defaultEnvTypeFields: FormField[] = [
-  { name: "port", type: "" },
-  { name: "node_env", type: "" },
-  { name: "access_token_secret", type: "" },
-  { name: "refresh_token_secret", type: "" },
-  { name: "db_url", type: "" },
+export const defaultEnvvalueFields: KeyValuePair[] = [
+  { key: "port", value: "" },
+  { key: "node_env", value: "" },
+  { key: "access_token_secret", value: "" },
+  { key: "refresh_token_secret", value: "" },
+  { key: "db_url", value: "" },
 ];

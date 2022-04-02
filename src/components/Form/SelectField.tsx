@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
-import Option from "../../models/Option";
+import Option from "../../models/KeyValuePair";
 
 type SelectFieldProps = {
   options: Option[];
@@ -23,9 +23,9 @@ export const SelectField: FC<SelectFieldProps> = ({
         disabled={disabled}
         {...registration}
       >
-        {options.map(({ label, value }, key) => (
-          <option key={key} value={value}>
-            {label}
+        {options.map(({ key, value }, index) => (
+          <option key={index} value={value}>
+            {key}
           </option>
         ))}
       </select>
