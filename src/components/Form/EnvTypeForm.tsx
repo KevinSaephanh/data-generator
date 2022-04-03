@@ -4,6 +4,9 @@ import fileImage from "../../assets/fileImage.png";
 import { AppContext } from "../../store/AppProvider";
 import { Tabs } from "../TabList/TabList";
 import { UPDATE_ENV_TYPES_PREVIEW } from "../../store/ActionTypes";
+import KeyValuePair from "../../models/KeyValuePair";
+import { parseLine } from "../../utils/parseLine";
+import { stringToCamelCase } from "../../utils/stringToCamelCase";
 
 export const EnvTypeForm = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -22,15 +25,20 @@ export const EnvTypeForm = () => {
 
   const handleButtonClick = async () => {
     const reader = new FileReader();
-    const arr: string[] = [];
+    const arr: KeyValuePair[] = [];
+
     reader.onload = (e: any) => {
       // Split file text by line and push to array
-      e.target.result.split(/\r\n/).map((line: string) => arr.push(line));
+      e.target.result.split(/\r\n/).map((line: string) => {
+        const keyValuePair = parseLine(line);
+        if (!!keyValuePair) arr.push(keyValuePair);
+      });
 
-      // dispatch({
-      //   type: UPDATE_ENV_TYPES_PREVIEW,
-      //   payload: arr,
-      // });
+      // Update store with keyValuePair array as new env types preview
+      dispatch({
+        type: UPDATE_ENV_TYPES_PREVIEW,
+        payload: arr,
+      });
     };
     reader.readAsText(file!);
   };

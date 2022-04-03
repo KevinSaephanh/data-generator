@@ -1,4 +1,8 @@
-// Takes in data as string and parses it to check the type
+/**
+ * @description Takes in data as string and parses it to check the type
+ * @param {string} line
+ * @returns KeyValuePair OR null
+ */
 export const getDataType = (data: string) => {
   // If data is 'true' or 'false'
   if (data.toLowerCase() === "true" || data.toLowerCase() === "false") return "boolean";
