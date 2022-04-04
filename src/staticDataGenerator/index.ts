@@ -5,9 +5,23 @@ import MyPost from "../models/MyPost";
 import MyProduct from "../models/MyProduct";
 import MyUser from "../models/MyUser";
 import { getRandomDate } from "../utils/getRandomDate";
-import { getRandomNum } from "../utils/getRandomNum";
 
 const fakerator = Fakerator();
+
+const generateAvatarUrl = () => {
+  const randomNum = getRandomNum(1, 10000);
+  return `https://robohash.org/${randomNum}`;
+};
+
+const generateName = () => {
+  const fakerator = Fakerator();
+  const name = fakerator.names.name();
+  return name.split("\\s+");
+};
+
+const getRandomNum = (min: number, max: number) => {
+  return Math.random() * (max - min) + min;
+};
 
 export const createUsers = () => {
   const users: MyUser[] = [];

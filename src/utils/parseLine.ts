@@ -1,5 +1,4 @@
 import { getDataType } from "./getDataType";
-import { stringToCamelCase } from "./stringToCamelCase";
 
 /**
  * @description Parses line to extract key value pair
@@ -8,9 +7,8 @@ import { stringToCamelCase } from "./stringToCamelCase";
  */
 export const parseLine = (line: string) => {
   const [key, value] = line.split(/=(.*)/);
-  const mutatedKey = stringToCamelCase(key, "_");
   const dataType = getDataType(value);
 
-  if (!!mutatedKey && !!dataType) return { key: mutatedKey, value: dataType };
+  if (!!key && !!dataType) return { key, value: dataType };
   return null;
 };

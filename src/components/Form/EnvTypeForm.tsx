@@ -6,7 +6,7 @@ import { Tabs } from "../TabList/TabList";
 import { UPDATE_ENV_TYPES_PREVIEW } from "../../store/ActionTypes";
 import KeyValuePair from "../../models/KeyValuePair";
 import { parseLine } from "../../utils/parseLine";
-import { stringToCamelCase } from "../../utils/stringToCamelCase";
+import { createProcessEnv } from "../../utils/createProcessEnv";
 
 export const EnvTypeForm = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -21,26 +21,38 @@ export const EnvTypeForm = () => {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newFile = e.target.files![0];
     setFile(newFile);
+
+    // Reset preview
+    dispatch({
+      type: UPDATE_ENV_TYPES_PREVIEW,
+      payload: "",
+    });
   };
 
   const handleButtonClick = async () => {
     const reader = new FileReader();
-    const arr: KeyValuePair[] = [];
-
     reader.onload = (e: any) => {
-      // Split file text by line and push to array
-      e.target.result.split(/\r\n/).map((line: string) => {
-        const keyValuePair = parseLine(line);
-        if (!!keyValuePair) arr.push(keyValuePair);
-      });
+      const parsedData = getParsedData(e.target.result);
+      const envTypesPreview = createProcessEnv(parsedData);
 
       // Update store with keyValuePair array as new env types preview
       dispatch({
         type: UPDATE_ENV_TYPES_PREVIEW,
-        payload: arr,
+        payload: envTypesPreview,
       });
     };
     reader.readAsText(file!);
+  };
+
+  const getParsedData = (data: string) => {
+    const arr: KeyValuePair[] = [];
+
+    // Split text data by line and push to array
+    data.split(/\r\n/).map((line: string) => {
+      const keyValuePair = parseLine(line);
+      if (!!keyValuePair) arr.push(keyValuePair);
+    });
+    return arr;
   };
 
   return (

@@ -19,7 +19,7 @@ export interface UpdateEntityPreview {
 
 export interface UpdateEnvTypesPreview {
   type: typeof UPDATE_ENV_TYPES_PREVIEW;
-  payload: KeyValuePair[];
+  payload: string;
 }
 
 export interface UpdateIsReadyToGenerate {
