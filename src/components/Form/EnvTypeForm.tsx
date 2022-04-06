@@ -13,6 +13,7 @@ export const EnvTypeForm = () => {
   const { activeTab, isReadyToGenerate, isGeneratingPreview } = state;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File>();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleClick = () => {
     if (fileInputRef.current !== null) fileInputRef.current.click();
@@ -27,6 +28,11 @@ export const EnvTypeForm = () => {
       type: UPDATE_ENV_TYPES_PREVIEW,
       payload: "",
     });
+
+    // If file type is NOT .env, display error
+    const index = newFile.name.lastIndexOf(".env");
+    const err = index > 0 ? "" : "Please upload a .env file";
+    setErrorMessage(err);
   };
 
   const handleButtonClick = async () => {
@@ -48,7 +54,7 @@ export const EnvTypeForm = () => {
     const arr: KeyValuePair[] = [];
 
     // Split text data by line and push to array
-    data.split(/\r\n/).map((line: string) => {
+    data.split(/\r\n/).forEach((line: string) => {
       const keyValuePair = parseLine(line);
       if (!!keyValuePair) arr.push(keyValuePair);
     });
@@ -61,6 +67,9 @@ export const EnvTypeForm = () => {
         activeTab === Tabs[Tabs.EnvTypes] ? "block" : "hidden"
       }`}
     >
+      {!!errorMessage ? (
+        <span className="text-center text-red-500 font-bold tracking-wide p-4">{errorMessage}</span>
+      ) : null}
       <img
         id="background"
         src={fileImage}
@@ -88,7 +97,7 @@ export const EnvTypeForm = () => {
           className={
             "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mt-5 rounded"
           }
-          disabled={!file || isReadyToGenerate || isGeneratingPreview}
+          disabled={!file || !!errorMessage || isReadyToGenerate || isGeneratingPreview}
           handleClick={handleButtonClick}
         />
       </div>

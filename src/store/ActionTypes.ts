@@ -1,5 +1,3 @@
-import KeyValuePair from "../models/KeyValuePair";
-
 export const UPDATE_ACTIVE_TAB = "UPDATE ACTIVE TAB";
 export const UPDATE_ENTITY_PREVIEW = "UPDATE ENTITY PREVIEW";
 export const UPDATE_ENV_TYPES_PREVIEW = "UPDATE ENV TYPES PREVIEW";

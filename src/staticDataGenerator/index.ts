@@ -1,4 +1,5 @@
 import Fakerator from "fakerator";
+import KeyValuePair from "../models/KeyValuePair";
 import MyComment from "../models/MyComment";
 import MyOrder from "../models/MyOrder";
 import MyPost from "../models/MyPost";
@@ -114,4 +115,18 @@ export const createOrders = () => {
   }
 
   return orders;
+};
+
+export const createMockEnvTypes = () => {
+  return [
+    { key: "NODE_ENV", value: "string" },
+    { key: "PORT", value: "number" },
+    { key: "DB_HOST", value: "string" },
+    { key: "DB_PORT", value: "number" },
+    { key: "DB_USERNAME", value: "string" },
+    { key: "DB_PASSWORD", value: "string" },
+    { key: "ACCESS_TOKEN_SECRET", value: "string" },
+    { key: "REFRESH_TOKEN_SECRET", value: "string" },
+    { key: "TOKEN_EXPIRES_IN", value: "string" },
+  ] as KeyValuePair[];
 };

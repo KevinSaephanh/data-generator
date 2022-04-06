@@ -3,13 +3,15 @@ import { Preview } from "../components/Preview/Preview";
 import { TabList, Tabs } from "../components/TabList/TabList";
 import {
   createComments,
+  createMockEnvTypes,
   createOrders,
   createPosts,
   createProducts,
   createUsers,
 } from "../staticDataGenerator";
-import { UPDATE_ENTITY_PREVIEW } from "../store/ActionTypes";
+import { UPDATE_ENTITY_PREVIEW, UPDATE_ENV_TYPES_PREVIEW } from "../store/ActionTypes";
 import { AppContext } from "../store/AppProvider";
+import { createProcessEnv } from "../utils/createProcessEnv";
 import { enumToString } from "../utils/enumToString";
 
 enum Entities {
@@ -22,55 +24,54 @@ enum Entities {
 
 export const Mocks = () => {
   const { state, dispatch } = useContext(AppContext);
+  const { activeTab } = state;
   const [activeEntity, setActiveEntity] = useState(Entities[Entities.Users]);
 
   useEffect(() => {
-    if (state.activeTab === Tabs[Tabs.MockData]) getEntitiesMock();
+    if (activeTab === Tabs[Tabs.MockData]) getEntitiesMock();
     else getEnvTypesMock();
-  }, [activeEntity]);
+  }, [activeEntity, activeTab]);
 
   const getEntitiesMock = () => {
+    let payload: any[] = [];
+
+    // Create payload depneding on current active entity
     switch (activeEntity) {
       case Entities[Entities.Users]:
-        dispatch({
-          type: UPDATE_ENTITY_PREVIEW,
-          payload: createUsers(),
-        });
+        payload = createUsers();
         break;
       case Entities[Entities.Posts]:
-        dispatch({
-          type: UPDATE_ENTITY_PREVIEW,
-          payload: createPosts(),
-        });
+        payload = createPosts();
         break;
       case Entities[Entities.Comments]:
-        dispatch({
-          type: UPDATE_ENTITY_PREVIEW,
-          payload: createComments(),
-        });
+        payload = createComments();
         break;
       case Entities[Entities.Products]:
-        dispatch({
-          type: UPDATE_ENTITY_PREVIEW,
-          payload: createProducts(),
-        });
+        payload = createProducts();
         break;
       case Entities[Entities.Orders]:
-        dispatch({
-          type: UPDATE_ENTITY_PREVIEW,
-          payload: createOrders(),
-        });
+        payload = createOrders();
         break;
       default:
-        dispatch({
-          type: UPDATE_ENTITY_PREVIEW,
-          payload: createUsers(),
-        });
+        payload = createUsers();
         break;
     }
+
+    // Update preview with new entities
+    dispatch({
+      type: UPDATE_ENTITY_PREVIEW,
+      payload,
+    });
   };
 
-  const getEnvTypesMock = () => {};
+  const getEnvTypesMock = () => {
+    const envTypes = createMockEnvTypes();
+    const envTypesPreview = createProcessEnv(envTypes);
+    dispatch({
+      type: UPDATE_ENV_TYPES_PREVIEW,
+      payload: envTypesPreview,
+    });
+  };
 
   return (
     <>
@@ -87,21 +88,23 @@ export const Mocks = () => {
       <section className="w-full md:w-11/12 flex flex-col md:flex-row md:mx-auto mt-10 md:mt-0 md:p-10">
         <div className="flex flex-col">
           <TabList />
-          <ul className="flex flex-row md:flex-col mx-auto md:mx-0">
-            {Object.keys(Entities)
-              .filter((key) => enumToString(key, Entities))
-              .map((name, i) => (
-                <li
-                  className={`md:w-32 cursor-pointer p-2 rounded hover:bg-indigo-500 ${
-                    name === activeEntity ? "bg-indigo-200" : ""
-                  }`}
-                  key={i}
-                  onClick={() => setActiveEntity(name)}
-                >
-                  {name}
-                </li>
-              ))}
-          </ul>
+          {activeTab === Tabs[Tabs.MockData] ? (
+            <ul className="flex flex-row md:flex-col mx-auto md:mx-0">
+              {Object.keys(Entities)
+                .filter((key) => enumToString(key, Entities))
+                .map((name, i) => (
+                  <li
+                    className={`md:w-32 cursor-pointer p-2 rounded hover:bg-indigo-500 ${
+                      name === activeEntity ? "bg-indigo-200" : ""
+                    }`}
+                    key={i}
+                    onClick={() => setActiveEntity(name)}
+                  >
+                    {name}
+                  </li>
+                ))}
+            </ul>
+          ) : null}
         </div>
         <Preview />
       </section>

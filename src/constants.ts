@@ -2,9 +2,9 @@ import KeyValuePair from "./models/KeyValuePair";
 
 export const entityOptions: KeyValuePair[] = [
   { key: "Select a value", value: "" },
-  { key: "Userkey", value: "userkey" },
-  { key: "First key", value: "firstkey" },
-  { key: "last key", value: "lastkey" },
+  { key: "Username", value: "username" },
+  { key: "FirstName", value: "firstName" },
+  { key: "LastName", value: "lastName" },
   { key: "Email", value: "email" },
   { key: "Avatar", value: "avatar" },
   { key: "Date", value: "date" },
@@ -22,7 +22,7 @@ export const envvalueOptions: KeyValuePair[] = [
 
 export const defaultEntityFields: KeyValuePair[] = [
   { key: "userId", value: "PrimaryId" },
-  { key: "userkey", value: "Userkey" },
+  { key: "username", value: "Username" },
   { key: "email", value: "Email" },
   { key: "avatar", value: "Avatar" },
 ];

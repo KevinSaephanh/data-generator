@@ -5,7 +5,7 @@ import { Tabs } from "../TabList/TabList";
 export const Preview = () => {
   const { activeTab, entityPreview, envTypesPreview } = useContext(AppContext).state;
   const [hasClicked, setHasclicked] = useState(false);
-  const [preview, setPreview] = useState<any>({});
+  const [preview, setPreview] = useState<string | any[]>("");
 
   useEffect(() => {
     if (activeTab === Tabs[Tabs.MockData]) setPreview(entityPreview);
@@ -28,7 +28,15 @@ export const Preview = () => {
         {hasClicked ? "Copied!" : "Copy"}
       </button>
       <div className="h-550 w-full max-w-700 md:text-lg overflow-y-scroll p-2 md:p-5 rounded border-2 border-gray-800">
-        {preview.length > 0 ? <pre className="whitespace-pre-wrap">{preview}</pre> : null}
+        {preview.length > 0 ? (
+          <>
+            {typeof preview === "string" ? (
+              <pre className="whitespace-pre-wrap">{preview}</pre>
+            ) : (
+              <pre>{JSON.stringify(preview, null, 2)}</pre>
+            )}
+          </>
+        ) : null}
       </div>
     </div>
   );
