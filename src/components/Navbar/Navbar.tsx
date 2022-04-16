@@ -11,10 +11,6 @@ export const Navbar: FC = () => {
       text: "Home",
     },
     {
-      to: "/guide",
-      text: "Guide",
-    },
-    {
       to: "/mocks",
       text: "Mocks",
     },

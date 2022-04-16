@@ -1,6 +1,5 @@
 import { useRoutes } from "react-router-dom";
 import { Home } from "../pages/Home";
-import { Guide } from "../pages/Guide";
 import { Mocks } from "../pages/Mocks";
 
 export const AppRoutes = () => {
@@ -8,10 +7,6 @@ export const AppRoutes = () => {
     {
       path: "/",
       element: <Home />,
-    },
-    {
-      path: "/guide",
-      element: <Guide />,
     },
     {
       path: "/mocks",

@@ -44,6 +44,7 @@ export const EntityForm = () => {
                 placeholder={"Enter entity name"}
                 pattern={"[A-Za-z0-9-_]+"}
                 disabled={isGeneratingPreview}
+                tooltip={"Enter the name of the entity field"}
                 registration={register(`entities.${index}.key`, { required: true })}
               />
               <SelectField

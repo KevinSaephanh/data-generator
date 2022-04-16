@@ -6,6 +6,7 @@ type InputFieldProps = {
   defaultValue?: string;
   pattern?: string;
   disabled?: boolean;
+  tooltip?: string;
   registration: Partial<UseFormRegisterReturn>;
 };
 
@@ -14,6 +15,7 @@ export const InputField: FC<InputFieldProps> = ({
   defaultValue,
   pattern,
   disabled,
+  tooltip,
   registration,
 }) => {
   const handleChange = (e: any) => {
@@ -29,6 +31,8 @@ export const InputField: FC<InputFieldProps> = ({
       className="w-44 md:w-64 mb-5 p-2 mr-5"
       minLength={1}
       maxLength={20}
+      data-bs-toggle="tooltip"
+      title={tooltip}
       {...registration}
       // onChange={e => {
       //   registration.onChange(e)
