@@ -17,7 +17,6 @@ export const SelectField: FC<SelectFieldProps> = ({
 }) => {
   return (
     <>
-      {defaultValue}
       <select
         className="w-32 md:w-40 mb-5 p-2"
         defaultValue={defaultValue}

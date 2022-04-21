@@ -10,6 +10,9 @@ export const entityOptions: KeyValuePair[] = [
   { key: "Date", value: "date" },
   { key: "Primary ID", value: "primaryId" },
   { key: "Unique ID", value: "uniqueId" },
+  { key: "Number", value: "number" },
+  { key: "Boolean", value: "boolean" },
+  { key: "Encrypt", value: "encrypt" },
 ];
 
 export const envvalueOptions: KeyValuePair[] = [
@@ -21,10 +24,11 @@ export const envvalueOptions: KeyValuePair[] = [
 ];
 
 export const defaultEntityFields: KeyValuePair[] = [
-  { key: "userId", value: "PrimaryId" },
-  { key: "username", value: "Username" },
-  { key: "email", value: "Email" },
-  { key: "avatar", value: "Avatar" },
+  { key: "", value: "" },
+  { key: "", value: "" },
+  { key: "", value: "" },
+  { key: "", value: "" },
+  { key: "", value: "" },
 ];
 
 export const defaultEnvvalueFields: KeyValuePair[] = [
@@ -33,4 +37,19 @@ export const defaultEnvvalueFields: KeyValuePair[] = [
   { key: "access_token_secret", value: "" },
   { key: "refresh_token_secret", value: "" },
   { key: "db_url", value: "" },
+];
+
+export const entitySuggestions = [
+  "username",
+  "firstName",
+  "lastName",
+  "email",
+  "password",
+  "avatar",
+  "createdAt",
+  "updatedAt",
+  "isAdmin",
+  "id",
+  "uid",
+  "primaryId",
 ];
