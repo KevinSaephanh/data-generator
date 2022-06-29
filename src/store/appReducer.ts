@@ -2,6 +2,7 @@ import {
   AppActions,
   GENERATE_PREVIEW_REQUEST,
   GENERATE_PREVIEW_SUCCESS,
+  RESET_PREVIEWS,
   UPDATE_ACTIVE_TAB,
   UPDATE_ENTITY_PREVIEW,
   UPDATE_ENV_TYPES_PREVIEW,
@@ -23,6 +24,12 @@ export const appReducer = (state = initialState, action: AppActions) => {
       return { ...state, isReadyToGenerate: false, isGenerating: true };
     case GENERATE_PREVIEW_SUCCESS:
       return { ...state, isGenerating: false };
+    case RESET_PREVIEWS:
+      return {
+        ...state,
+        entityPreview: [],
+        envTypesPreview: "",
+      };
     default:
       return state;
   }

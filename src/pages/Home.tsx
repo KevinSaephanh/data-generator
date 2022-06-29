@@ -1,10 +1,19 @@
-import { FC } from "react";
+import { FC, useContext, useEffect } from "react";
 import { EntityForm } from "../components/Form/EntityForm";
 import { EnvTypeForm } from "../components/Form/EnvTypeForm";
 import { Preview } from "../components/Preview/Preview";
 import { TabList } from "../components/TabList/TabList";
+import { RESET_PREVIEWS } from "../store/ActionTypes";
+import { AppContext } from "../store/AppProvider";
 
 export const Home: FC = () => {
+  const { dispatch } = useContext(AppContext);
+
+  useEffect(() => {
+    // Reset previews
+    dispatch({ type: RESET_PREVIEWS });
+  }, []);
+
   return (
     <>
       <section className="relative">

@@ -4,6 +4,7 @@ export const UPDATE_ENV_TYPES_PREVIEW = "UPDATE ENV TYPES PREVIEW";
 export const UPDATE_IS_READY_TO_GENERATE = "UPDATE IS READY TO GENERATE";
 export const GENERATE_PREVIEW_REQUEST = "GENERATE PREVIEW REQUEST";
 export const GENERATE_PREVIEW_SUCCESS = "GENERATE PREVIEW SUCCESS";
+export const RESET_PREVIEWS = "RESET PREVIEWS";
 
 export interface UpdateActiveTab {
   type: typeof UPDATE_ACTIVE_TAB;
@@ -33,10 +34,15 @@ export interface GeneratePreviewSuccess {
   type: typeof GENERATE_PREVIEW_SUCCESS;
 }
 
+export interface ResetPreviews {
+  type: typeof RESET_PREVIEWS;
+}
+
 export type AppActions =
   | UpdateActiveTab
   | UpdateEntityPreview
   | UpdateEnvTypesPreview
   | UpdateIsReadyToGenerate
   | GeneratePreviewRequest
-  | GeneratePreviewSuccess;
+  | GeneratePreviewSuccess
+  | ResetPreviews;

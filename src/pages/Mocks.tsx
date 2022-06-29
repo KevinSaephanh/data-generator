@@ -9,7 +9,11 @@ import {
   createProducts,
   createUsers,
 } from "../staticDataGenerator";
-import { UPDATE_ENTITY_PREVIEW, UPDATE_ENV_TYPES_PREVIEW } from "../store/ActionTypes";
+import {
+  RESET_PREVIEWS,
+  UPDATE_ENTITY_PREVIEW,
+  UPDATE_ENV_TYPES_PREVIEW,
+} from "../store/ActionTypes";
 import { AppContext } from "../store/AppProvider";
 import { createProcessEnv } from "../utils/createProcessEnv";
 import { enumToString } from "../utils/enumToString";
@@ -28,6 +32,10 @@ export const Mocks = () => {
   const [activeEntity, setActiveEntity] = useState(Entities[Entities.Users]);
 
   useEffect(() => {
+    // Reset previews
+    dispatch({ type: RESET_PREVIEWS });
+
+    // Generate mock data
     if (activeTab === Tabs[Tabs.MockData]) getEntitiesMock();
     else getEnvTypesMock();
   }, [activeEntity, activeTab]);
