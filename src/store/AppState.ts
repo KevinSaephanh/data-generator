@@ -6,6 +6,7 @@ export interface AppState {
   envTypesPreview: string;
   isReadyToGenerate: boolean;
   isGeneratingPreview: boolean;
+  errorMessage: string;
 }
 
 export const initialState: AppState = {
@@ -14,4 +15,5 @@ export const initialState: AppState = {
   envTypesPreview: "",
   isReadyToGenerate: false,
   isGeneratingPreview: false,
+  errorMessage: "",
 };

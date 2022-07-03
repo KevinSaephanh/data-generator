@@ -3,17 +3,17 @@ import { FormButton } from "../Buttons/FormButton";
 import fileImage from "../../assets/fileImage.png";
 import { AppContext } from "../../store/AppProvider";
 import { Tabs } from "../TabList/TabList";
-import { UPDATE_ENV_TYPES_PREVIEW } from "../../store/ActionTypes";
+import { SET_ERROR_MESSAGE, UPDATE_ENV_TYPES_PREVIEW } from "../../store/ActionTypes";
 import KeyValuePair from "../../models/KeyValuePair";
 import { parseLine } from "../../utils/parseLine";
 import { createProcessEnv } from "../../utils/createProcessEnv";
 
 export const EnvTypeForm = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { activeTab, isReadyToGenerate, isGeneratingPreview } = state;
+  const { activeTab, isGeneratingPreview, errorMessage } = state;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File>();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const handleClick = () => {
     if (fileInputRef.current !== null) fileInputRef.current.click();
@@ -23,16 +23,18 @@ export const EnvTypeForm = () => {
     const newFile = e.target.files![0];
     setFile(newFile);
 
-    // Reset preview
-    dispatch({
-      type: UPDATE_ENV_TYPES_PREVIEW,
-      payload: "",
-    });
-
     // If file type is NOT .env, display error
     const index = newFile.name.lastIndexOf(".env");
-    const err = index > 0 ? "" : "Please upload a .env file";
-    setErrorMessage(err);
+    if (index < 1) {
+      const err = "Please upload a .env file";
+      dispatch({
+        type: SET_ERROR_MESSAGE,
+        payload: err,
+      });
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
   };
 
   const handleButtonClick = async () => {
@@ -97,7 +99,7 @@ export const EnvTypeForm = () => {
           className={
             "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mt-5 rounded"
           }
-          disabled={!file || !!errorMessage || isReadyToGenerate || isGeneratingPreview}
+          disabled={!file || isDisabled || isGeneratingPreview}
           handleClick={handleButtonClick}
         />
       </div>

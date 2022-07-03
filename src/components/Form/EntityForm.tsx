@@ -1,7 +1,8 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { defaultEntityFields, entityOptions } from "../../constants";
 import KeyValuePair from "../../models/KeyValuePair";
+import { SET_ERROR_MESSAGE } from "../../store/ActionTypes";
 import { AppContext } from "../../store/AppProvider";
 import { ExitButton } from "../Buttons/ExitButton";
 import { FormButton } from "../Buttons/FormButton";
@@ -11,7 +12,7 @@ import { SelectField } from "./SelectField";
 
 export const EntityForm = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { activeTab, isReadyToGenerate, isGeneratingPreview } = state;
+  const { activeTab, isReadyToGenerate, isGeneratingPreview, errorMessage } = state;
   const { register, handleSubmit, control } = useForm({
     defaultValues: { entities: defaultEntityFields },
     shouldUnregister: false,
@@ -20,8 +21,13 @@ export const EntityForm = () => {
     control,
     name: "entities",
   });
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const onSubmit = (data: any) => {
+    dispatch({
+      type: SET_ERROR_MESSAGE,
+      payload: "",
+    });
     console.log(data);
   };
 
