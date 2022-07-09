@@ -13,7 +13,7 @@ export const EnvTypeForm = () => {
   const { activeTab, isGeneratingPreview, errorMessage } = state;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File>();
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(true);
 
   const handleClick = () => {
     if (fileInputRef.current !== null) fileInputRef.current.click();
@@ -24,17 +24,18 @@ export const EnvTypeForm = () => {
     setFile(newFile);
 
     // If file type is NOT .env, display error
-    const index = newFile.name.lastIndexOf(".env");
-    if (index < 1) {
+    const isEnvFile = newFile.name.lastIndexOf(".env") > 1;
+    if (!isEnvFile) {
       const err = "Please upload a .env file";
       dispatch({
         type: SET_ERROR_MESSAGE,
         payload: err,
       });
-      setIsDisabled(true);
-    } else {
-      setIsDisabled(false);
     }
+
+    // Set disabled value
+    if (!isEnvFile || !isGeneratingPreview) setDisabled(true);
+    else setDisabled(false);
   };
 
   const handleButtonClick = async () => {
@@ -99,7 +100,7 @@ export const EnvTypeForm = () => {
           className={
             "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mt-5 rounded"
           }
-          disabled={!file || isDisabled || isGeneratingPreview}
+          disabled={disabled}
           handleClick={handleButtonClick}
         />
       </div>

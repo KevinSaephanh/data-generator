@@ -21,7 +21,7 @@ export const EntityForm = () => {
     control,
     name: "entities",
   });
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(true);
 
   const onSubmit = (data: any) => {
     dispatch({
@@ -84,7 +84,7 @@ export const EntityForm = () => {
             className={
               "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mb-5 rounded disabled:opacity-25"
             }
-            disabled={!isReadyToGenerate || isGeneratingPreview}
+            disabled={disabled}
             handleClick={() => {}}
           />
         </div>
