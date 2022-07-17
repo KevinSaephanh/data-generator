@@ -46,22 +46,22 @@ export const Mocks = () => {
     // Create payload depneding on current active entity
     switch (activeEntity) {
       case Entities[Entities.Users]:
-        payload = createUsers();
+        payload = createUsers(50);
         break;
       case Entities[Entities.Posts]:
-        payload = createPosts();
+        payload = createPosts(50);
         break;
       case Entities[Entities.Comments]:
-        payload = createComments();
+        payload = createComments(50);
         break;
       case Entities[Entities.Products]:
-        payload = createProducts();
+        payload = createProducts(50);
         break;
       case Entities[Entities.Orders]:
-        payload = createOrders();
+        payload = createOrders(50);
         break;
       default:
-        payload = createUsers();
+        payload = createUsers(50);
         break;
     }
 

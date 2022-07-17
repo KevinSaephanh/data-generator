@@ -15,6 +15,20 @@ export const entityOptions: KeyValuePair[] = [
   { key: "Encrypt", value: "encrypt" },
 ];
 
+export enum EntityOptionsValues {
+  Username,
+  FirstName,
+  LastName,
+  Email,
+  Avatar,
+  Date,
+  PrimaryId,
+  UniqueId,
+  Number,
+  Boolean,
+  Encrypt,
+}
+
 export const envvalueOptions: KeyValuePair[] = [
   { key: "Select a value", value: "" },
   { key: "String", value: "string" },

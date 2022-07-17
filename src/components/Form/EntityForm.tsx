@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { FormEvent, KeyboardEvent, useContext, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { defaultEntityFields, entityOptions } from "../../constants";
 import KeyValuePair from "../../models/KeyValuePair";
@@ -23,19 +23,29 @@ export const EntityForm = () => {
     name: "entities",
   });
   const [disabled, setDisabled] = useState(false);
+  const [numRecords, setNumRecords] = useState(1);
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    const { key } = event;
+    const isValidKey =
+      !isNaN(+key) || key === "Backspace" || key === "ArrowRight" || key === "ArrowLeft";
+    if (!isValidKey) event.preventDefault();
+  };
+
+  const handleChange = (event: FormEvent<HTMLInputElement>) => {
+    const num = +event.currentTarget.value;
+    const isInvalidNum = num > 1000 || num < 1;
+
+    dispatch({
+      type: SET_ERROR_MESSAGE,
+      payload: isInvalidNum ? "Please enter a number between 1 and 1000" : "",
+    });
+    setDisabled(isInvalidNum);
+    setNumRecords(num);
+  };
 
   const onSubmit = (data: any) => {
-    if (formState.isDirty) {
-      dispatch({
-        type: SET_ERROR_MESSAGE,
-        payload: "Please fill out all fields before submitting",
-      });
-    }
     console.log(data);
-
-    // Set disabled value
-    if (!!errorMessage || isGeneratingPreview) setDisabled(true);
-    else setDisabled(false);
   };
 
   return (
@@ -76,6 +86,20 @@ export const EntityForm = () => {
           );
         })}
 
+        <div className="mb-8">
+          <span># of Records (Max. 1000): </span>
+          <input
+            type="number"
+            pattern="[0-9]"
+            min="1"
+            max="1000"
+            className="border-b-2 border-black w-16"
+            title="Input number of records you want to generate"
+            onKeyDown={handleKeyDown}
+            onChange={handleChange}
+          />
+        </div>
+
         <div className="flex flex-row">
           <FormButton
             text={"Add Field"}
@@ -90,9 +114,9 @@ export const EntityForm = () => {
             text={"Generate"}
             type={"submit"}
             className={
-              "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mb-5 rounded disabled:opacity-25"
+              "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mb-5 rounded disabled:cursor-not-allowed"
             }
-            disabled={disabled}
+            disabled={!formState.isValid || !!errorMessage}
             handleClick={() => {}}
           />
         </div>

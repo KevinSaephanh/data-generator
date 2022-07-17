@@ -20,7 +20,7 @@ module.exports = {
     },
   },
   variants: {
-    extend: { opacity: ["disabled"] },
+    extend: { opacity: ["disabled"], backgroundColor: ["hover"], cursorNotAllowed: ["disabled"] },
     backgroundColor: ["disabled"],
   },
   plugins: [],

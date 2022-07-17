@@ -1,4 +1,5 @@
 import Fakerator from "fakerator";
+import { EntityOptionsValues } from "../constants";
 import KeyValuePair from "../models/KeyValuePair";
 import MyComment from "../models/MyComment";
 import MyOrder from "../models/MyOrder";
@@ -6,6 +7,7 @@ import MyPost from "../models/MyPost";
 import MyProduct from "../models/MyProduct";
 import MyUser from "../models/MyUser";
 import { getRandomDate } from "../utils/getRandomDate";
+import * as CryptoJS from "crypto-js";
 
 const fakerator = Fakerator();
 
@@ -14,20 +16,14 @@ const generateAvatarUrl = () => {
   return `https://robohash.org/${randomNum}`;
 };
 
-const generateName = () => {
-  const fakerator = Fakerator();
-  const name = fakerator.names.name();
-  return name.split("\\s+");
-};
-
 const getRandomNum = (min: number, max: number) => {
   return Math.random() * (max - min) + min;
 };
 
-export const createUsers = () => {
+export const createUsers = (numRecords: number) => {
   const users: MyUser[] = [];
 
-  for (let i = 1; i < 51; i++) {
+  for (let i = 0; i < numRecords - 1; i++) {
     const user: MyUser = {
       userId: i,
       isAdmin: Math.random() < 0.5,
@@ -41,10 +37,10 @@ export const createUsers = () => {
   return users;
 };
 
-export const createPosts = () => {
+export const createPosts = (numRecords: number) => {
   const posts: MyPost[] = [];
 
-  for (let i = 1; i < 51; i++) {
+  for (let i = 0; i < numRecords - 1; i++) {
     const randomNum = getRandomNum(1, 35);
     const post: MyPost = {
       postId: i,
@@ -59,10 +55,10 @@ export const createPosts = () => {
   return posts;
 };
 
-export const createComments = () => {
+export const createComments = (numRecords: number) => {
   const comments: MyComment[] = [];
 
-  for (let i = 1; i < 51; i++) {
+  for (let i = 0; i < numRecords - 1; i++) {
     const comment: MyComment = {
       commentId: i,
       postId: getRandomNum(1, 35),
@@ -78,10 +74,10 @@ export const createComments = () => {
   return comments;
 };
 
-export const createProducts = () => {
+export const createProducts = (numRecords: number) => {
   const products: MyProduct[] = [];
 
-  for (let i = 1; i < 51; i++) {
+  for (let i = 0; i < numRecords - 1; i++) {
     const product: MyProduct = {
       productId: i,
       categoryId: getRandomNum(1, 25),
@@ -98,10 +94,10 @@ export const createProducts = () => {
   return products;
 };
 
-export const createOrders = () => {
+export const createOrders = (numRecords: number) => {
   const orders: MyOrder[] = [];
 
-  for (let i = 1; i < 51; i++) {
+  for (let i = 0; i < numRecords - 1; i++) {
     const order: MyOrder = {
       orderId: i,
       productId: getRandomNum(1, 40),
@@ -115,6 +111,54 @@ export const createOrders = () => {
   }
 
   return orders;
+};
+
+export const createEntity = (data: KeyValuePair[]) => {
+  const entity: any = {};
+  data.forEach((el) => {
+    switch (el.value) {
+      case EntityOptionsValues[EntityOptionsValues.Username]:
+        entity[el.key] = fakerator.internet.userName;
+        break;
+      case EntityOptionsValues[EntityOptionsValues.FirstName]:
+        entity[el.key] = fakerator.names.firstName;
+        break;
+      case EntityOptionsValues[EntityOptionsValues.LastName]:
+        entity[el.key] = fakerator.names.lastName;
+        break;
+      case EntityOptionsValues[EntityOptionsValues.Email]:
+        entity[el.key] = fakerator.internet.email;
+        break;
+      case EntityOptionsValues[EntityOptionsValues.Avatar]:
+        entity[el.key] = generateAvatarUrl;
+        break;
+      case EntityOptionsValues[EntityOptionsValues.Date]:
+        const now = new Date();
+        entity[el.key] = getRandomDate(
+          now,
+          new Date(now.getFullYear(), now.getMonth(), now.getDate() - 100)
+        );
+        break;
+      case EntityOptionsValues[EntityOptionsValues.PrimaryId]:
+        entity[el.key] = fakerator.random.number(1000);
+        break;
+      case EntityOptionsValues[EntityOptionsValues.UniqueId]:
+        entity[el.key] = fakerator.misc.uuid();
+        break;
+      case EntityOptionsValues[EntityOptionsValues.Number]:
+        entity[el.key] = fakerator.random.number(9999);
+        break;
+      case EntityOptionsValues[EntityOptionsValues.Boolean]:
+        entity[el.key] = Math.random() < 0.5;
+        break;
+      case EntityOptionsValues[EntityOptionsValues.Encrypt]:
+        entity[el.key] = CryptoJS.lib.WordArray.random(32);
+        break;
+      default:
+        break;
+    }
+  });
+  return entity;
 };
 
 export const createMockEnvTypes = () => {

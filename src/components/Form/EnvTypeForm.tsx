@@ -96,7 +96,7 @@ export const EnvTypeForm = () => {
           text={"Generate"}
           type={"button"}
           className={
-            "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mt-5 rounded"
+            "bg-green-500 hover:bg-green-700 text-white font-bold w-32 py-2 px-4 mt-5 rounded disabled:cursor-not-allowed"
           }
           disabled={disabled}
           handleClick={handleButtonClick}
