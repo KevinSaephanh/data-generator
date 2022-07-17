@@ -18,10 +18,6 @@ export const InputField: FC<InputFieldProps> = ({
   tooltip,
   registration,
 }) => {
-  const handleChange = (e: any) => {
-    console.log(e);
-  };
-
   return (
     <input
       placeholder={placeholder}
@@ -34,9 +30,6 @@ export const InputField: FC<InputFieldProps> = ({
       data-bs-toggle="tooltip"
       title={tooltip}
       {...registration}
-      // onChange={e => {
-      //   registration.onChange(e)
-      // }}
     />
   );
 };

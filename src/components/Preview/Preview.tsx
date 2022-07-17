@@ -20,14 +20,14 @@ export const Preview = () => {
   };
 
   return (
-    <div className="flex flex-col w-11/12 md:w-2/4 mx-auto md:mr-0 md:ml-auto">
+    <div className="flex flex-col w-10/12 max-w-700 lg:w-2/4 mx-auto md:mr-0 md:ml-auto mt-5 lg:mt-0">
       <button
-        className="bg-indigo-500 hover:bg-indigo-700 h-10 text-white font-bold w-32 py-2 px-4 mb-5 md:mr-0 ml-auto rounded mt-10 md:mt-0"
+        className="bg-indigo-500 hover:bg-indigo-700 h-10 text-white font-bold w-32 py-2 px-4 mb-5 ml-auto rounded mt-10 md:mt-0"
         onClick={handleClick}
       >
         {hasClicked ? "Copied!" : "Copy"}
       </button>
-      <div className="h-550 w-full max-w-700 md:text-lg overflow-y-scroll p-2 md:p-5 rounded border-2 border-gray-800">
+      <div className="h-550 w-full md:text-lg overflow-y-scroll p-2 md:p-5 rounded border-2 border-gray-800">
         {preview.length > 0 ? (
           <>
             {typeof preview === "string" ? (

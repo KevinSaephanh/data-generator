@@ -7,6 +7,7 @@ import { SET_ERROR_MESSAGE, UPDATE_ENV_TYPES_PREVIEW } from "../../store/ActionT
 import KeyValuePair from "../../models/KeyValuePair";
 import { parseLine } from "../../utils/parseLine";
 import { createProcessEnv } from "../../utils/createProcessEnv";
+import { ErrorMessage } from "./ErrorMessage";
 
 export const EnvTypeForm = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -26,15 +27,14 @@ export const EnvTypeForm = () => {
     // If file type is NOT .env, display error
     const isEnvFile = newFile.name.lastIndexOf(".env") > 1;
     if (!isEnvFile) {
-      const err = "Please upload a .env file";
       dispatch({
         type: SET_ERROR_MESSAGE,
-        payload: err,
+        payload: "Please upload a .env file",
       });
     }
 
     // Set disabled value
-    if (!isEnvFile || !isGeneratingPreview) setDisabled(true);
+    if (!isEnvFile || !!errorMessage || isGeneratingPreview) setDisabled(true);
     else setDisabled(false);
   };
 
@@ -70,9 +70,7 @@ export const EnvTypeForm = () => {
         activeTab === Tabs[Tabs.EnvTypes] ? "block" : "hidden"
       }`}
     >
-      {!!errorMessage ? (
-        <span className="text-center text-red-500 font-bold tracking-wide p-4">{errorMessage}</span>
-      ) : null}
+      <ErrorMessage show={disabled} text={errorMessage} />
       <img
         id="background"
         src={fileImage}

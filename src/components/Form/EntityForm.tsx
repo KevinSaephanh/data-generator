@@ -7,13 +7,14 @@ import { AppContext } from "../../store/AppProvider";
 import { ExitButton } from "../Buttons/ExitButton";
 import { FormButton } from "../Buttons/FormButton";
 import { Tabs } from "../TabList/TabList";
+import { ErrorMessage } from "./ErrorMessage";
 import { InputField } from "./InputField";
 import { SelectField } from "./SelectField";
 
 export const EntityForm = () => {
   const { state, dispatch } = useContext(AppContext);
-  const { activeTab, isReadyToGenerate, isGeneratingPreview, errorMessage } = state;
-  const { register, handleSubmit, control } = useForm({
+  const { activeTab, isGeneratingPreview, errorMessage } = state;
+  const { register, handleSubmit, control, formState } = useForm({
     defaultValues: { entities: defaultEntityFields },
     shouldUnregister: false,
   });
@@ -21,14 +22,20 @@ export const EntityForm = () => {
     control,
     name: "entities",
   });
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
   const onSubmit = (data: any) => {
-    dispatch({
-      type: SET_ERROR_MESSAGE,
-      payload: "",
-    });
+    if (formState.isDirty) {
+      dispatch({
+        type: SET_ERROR_MESSAGE,
+        payload: "Please fill out all fields before submitting",
+      });
+    }
     console.log(data);
+
+    // Set disabled value
+    if (!!errorMessage || isGeneratingPreview) setDisabled(true);
+    else setDisabled(false);
   };
 
   return (
@@ -38,6 +45,7 @@ export const EntityForm = () => {
       }`}
       onSubmit={handleSubmit(onSubmit)}
     >
+      <ErrorMessage show={disabled} text={errorMessage} />
       <div className="flex flex-col">
         <div className="flex flex-row space-x-24 md:space-x-40 mr-5 md:mr-10">
           <h3 className="font-semibold pb-5 pl-2 md:text-lg">Field Name</h3>
