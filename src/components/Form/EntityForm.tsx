@@ -2,7 +2,8 @@ import { FormEvent, KeyboardEvent, useContext, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { defaultEntityFields, entityOptions } from "../../constants";
 import KeyValuePair from "../../models/KeyValuePair";
-import { SET_ERROR_MESSAGE } from "../../store/ActionTypes";
+import { createEntity } from "../../staticDataGenerator";
+import { SET_ERROR_MESSAGE, UPDATE_ENTITY_PREVIEW } from "../../store/ActionTypes";
 import { AppContext } from "../../store/AppProvider";
 import { ExitButton } from "../Buttons/ExitButton";
 import { FormButton } from "../Buttons/FormButton";
@@ -36,6 +37,7 @@ export const EntityForm = () => {
     const num = +event.currentTarget.value;
     const isInvalidNum = num > 1000 || num < 1;
 
+    // If number is invalid, set error message and disable 'Generate' button
     dispatch({
       type: SET_ERROR_MESSAGE,
       payload: isInvalidNum ? "Please enter a number between 1 and 1000" : "",
@@ -45,8 +47,24 @@ export const EntityForm = () => {
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    const { entities } = data;
+    const arr: any[] = [];
+
+    // Create entities until number of records desired is reached
+    for (let i = 0; i < numRecords - 1; i++) {
+      const entity = createEntity(entities as KeyValuePair[]);
+      arr.push(entity);
+    }
+
+    // Set preview
+    dispatch({
+      type: UPDATE_ENTITY_PREVIEW,
+      payload: arr,
+    });
   };
+
+  console.log(!formState.isValid);
+  console.log("IS DIRTY: ", formState.isDirty);
 
   return (
     <form
@@ -67,6 +85,7 @@ export const EntityForm = () => {
               <InputField
                 placeholder={"Enter entity name"}
                 pattern={"[A-Za-z0-9-_]+"}
+                defaultValue={field.value}
                 disabled={isGeneratingPreview}
                 tooltip={"Enter the name of the entity field"}
                 registration={register(`entities.${index}.key`, { required: true })}

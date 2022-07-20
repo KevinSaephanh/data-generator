@@ -3,8 +3,8 @@ import KeyValuePair from "./models/KeyValuePair";
 export const entityOptions: KeyValuePair[] = [
   { key: "Select a value", value: "" },
   { key: "Username", value: "username" },
-  { key: "FirstName", value: "firstName" },
-  { key: "LastName", value: "lastName" },
+  { key: "First Name", value: "firstName" },
+  { key: "Last Name", value: "lastName" },
   { key: "Email", value: "email" },
   { key: "Avatar", value: "avatar" },
   { key: "Date", value: "date" },

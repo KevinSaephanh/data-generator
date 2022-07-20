@@ -23,8 +23,8 @@ export const SelectField: FC<SelectFieldProps> = ({
         disabled={disabled}
         {...registration}
       >
-        {options.map(({ key, value }, index) => (
-          <option key={index} value={value}>
+        {options.map(({ key, value }) => (
+          <option key={key} value={value}>
             {key}
           </option>
         ))}
