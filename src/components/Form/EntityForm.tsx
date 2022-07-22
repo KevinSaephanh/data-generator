@@ -15,7 +15,7 @@ import { SelectField } from "./SelectField";
 export const EntityForm = () => {
   const { state, dispatch } = useContext(AppContext);
   const { activeTab, isGeneratingPreview, errorMessage } = state;
-  const { register, handleSubmit, control, formState } = useForm({
+  const { register, handleSubmit, control, formState, setValue } = useForm({
     defaultValues: { entities: defaultEntityFields },
     shouldUnregister: false,
   });
@@ -33,7 +33,7 @@ export const EntityForm = () => {
     if (!isValidKey) event.preventDefault();
   };
 
-  const handleChange = (event: FormEvent<HTMLInputElement>) => {
+  const handleNumChange = (event: FormEvent<HTMLInputElement>) => {
     const num = +event.currentTarget.value;
     const isInvalidNum = num > 1000 || num < 1;
 
@@ -46,12 +46,17 @@ export const EntityForm = () => {
     setNumRecords(num);
   };
 
+  const handleFieldChange = (index: number, value: string, fieldType: string) => {
+    if (fieldType === "input") setValue(`entities.${index}.key`, value);
+    else setValue(`entities.${index}.value`, value);
+  };
+
   const onSubmit = (data: any) => {
     const { entities } = data;
     const arr: any[] = [];
 
     // Create entities until number of records desired is reached
-    for (let i = 0; i < numRecords - 1; i++) {
+    for (let i = 0; i < numRecords; i++) {
       const entity = createEntity(entities as KeyValuePair[]);
       arr.push(entity);
     }
@@ -62,9 +67,6 @@ export const EntityForm = () => {
       payload: arr,
     });
   };
-
-  console.log(!formState.isValid);
-  console.log("IS DIRTY: ", formState.isDirty);
 
   return (
     <form
@@ -79,22 +81,26 @@ export const EntityForm = () => {
           <h3 className="font-semibold pb-5 pl-2 md:text-lg">Field Name</h3>
           <h3 className="font-semibold pb-5 pl-2 md:text-lg">Type</h3>
         </div>
-        {fields.map((field: KeyValuePair, index: number) => {
+        {fields.map((field, index) => {
           return (
-            <div className="flex flex-row" key={index}>
+            <div
+              className="flex flex-row"
+              key={field.id}
+              {...register(`entities.${index}` as const, { required: true })}
+            >
               <InputField
+                index={index}
                 placeholder={"Enter entity name"}
                 pattern={"[A-Za-z0-9-_]+"}
-                defaultValue={field.value}
                 disabled={isGeneratingPreview}
                 tooltip={"Enter the name of the entity field"}
-                registration={register(`entities.${index}.key`, { required: true })}
+                change={handleFieldChange}
               />
               <SelectField
+                index={index}
                 options={entityOptions}
-                defaultValue={field.value}
                 disabled={isGeneratingPreview}
-                registration={register(`entities.${index}.key`, { required: true })}
+                change={handleFieldChange}
               />
               <ExitButton
                 key={index}
@@ -115,7 +121,7 @@ export const EntityForm = () => {
             className="border-b-2 border-black w-16"
             title="Input number of records you want to generate"
             onKeyDown={handleKeyDown}
-            onChange={handleChange}
+            onChange={handleNumChange}
           />
         </div>
 

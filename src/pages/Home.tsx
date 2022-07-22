@@ -38,7 +38,7 @@ export const Home: FC = () => {
       </section>
 
       <section className="relative w-full md:w-11/12 md:mx-auto">
-        <div className="flex flex-col lg:flex-row lg:p-10">
+        <div className="flex flex-col lg:flex-row lg:p-10 mb-10">
           <div className="flex flex-col mx-auto lg:mx-0">
             <TabList />
 

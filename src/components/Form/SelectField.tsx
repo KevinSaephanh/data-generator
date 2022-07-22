@@ -1,28 +1,22 @@
-import { FC } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { ChangeEvent, FC } from "react";
 import Option from "../../models/KeyValuePair";
 
 type SelectFieldProps = {
   options: Option[];
-  defaultValue?: string;
+  index?: number;
   disabled?: boolean;
-  registration: Partial<UseFormRegisterReturn>;
+  name?: string;
+  change: Function;
 };
 
-export const SelectField: FC<SelectFieldProps> = ({
-  options,
-  registration,
-  defaultValue,
-  disabled,
-}) => {
+export const SelectField: FC<SelectFieldProps> = ({ options, index, name, disabled, change }) => {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    change(index, e.target.value, "select");
+  };
+
   return (
     <>
-      <select
-        className="w-40 mb-5 p-2"
-        defaultValue={defaultValue}
-        disabled={disabled}
-        {...registration}
-      >
+      <select className="w-40 mb-5 p-2" disabled={disabled} name={name} onChange={handleChange}>
         {options.map(({ key, value }) => (
           <option key={key} value={value}>
             {key}

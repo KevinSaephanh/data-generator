@@ -116,8 +116,6 @@ export const createOrders = (numRecords: number) => {
 export const createEntity = (data: KeyValuePair[]) => {
   const entity: any = {};
 
-  console.log(data);
-
   // Iterate through each element in the array
   data.forEach((el) => {
     // Append new property to entity object by matching the element value
