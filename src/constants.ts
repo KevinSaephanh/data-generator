@@ -2,17 +2,17 @@ import KeyValuePair from "./models/KeyValuePair";
 
 export const entityOptions: KeyValuePair[] = [
   { key: "Select a value", value: "" },
-  { key: "Username", value: "username" },
-  { key: "First Name", value: "firstName" },
-  { key: "Last Name", value: "lastName" },
-  { key: "Email", value: "email" },
-  { key: "Avatar", value: "avatar" },
-  { key: "Date", value: "date" },
-  { key: "Primary ID", value: "primaryId" },
-  { key: "Unique ID", value: "uniqueId" },
-  { key: "Number", value: "number" },
-  { key: "Boolean", value: "boolean" },
-  { key: "Encrypt", value: "encrypt" },
+  { key: "Username", value: "Username" },
+  { key: "First Name", value: "FirstName" },
+  { key: "Last Name", value: "LastName" },
+  { key: "Email", value: "Email" },
+  { key: "Avatar", value: "Avatar" },
+  { key: "Date", value: "Date" },
+  { key: "Primary ID", value: "PrimaryId" },
+  { key: "Unique ID", value: "UniqueId" },
+  { key: "Number", value: "Number" },
+  { key: "Boolean", value: "Boolean" },
+  { key: "Encrypt", value: "Encrypt" },
 ];
 
 export enum EntityOptionsValues {

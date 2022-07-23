@@ -6,7 +6,6 @@ type InputFieldProps = {
   pattern?: string;
   disabled?: boolean;
   tooltip?: string;
-  name?: string;
   change: Function;
 };
 
@@ -16,7 +15,6 @@ export const InputField: FC<InputFieldProps> = ({
   pattern,
   disabled,
   tooltip,
-  name,
   change,
 }) => {
   const [value, setValue] = useState("");
@@ -33,10 +31,9 @@ export const InputField: FC<InputFieldProps> = ({
       disabled={disabled}
       className="w-44 md:w-64 mb-5 p-2 mr-5"
       minLength={1}
-      maxLength={20}
+      maxLength={25}
       data-bs-toggle="tooltip"
       title={tooltip}
-      name={name}
       value={value}
       onChange={handleChange}
     />

@@ -7,7 +7,7 @@ import MyPost from "../models/MyPost";
 import MyProduct from "../models/MyProduct";
 import MyUser from "../models/MyUser";
 import { getRandomDate } from "../utils/getRandomDate";
-import * as CryptoJS from "crypto-js";
+import { getRandomHash } from "../utils/getRandomHash";
 
 const fakerator = Fakerator();
 
@@ -121,19 +121,19 @@ export const createEntity = (data: KeyValuePair[]) => {
     // Append new property to entity object by matching the element value
     switch (el.value) {
       case EntityOptionsValues[EntityOptionsValues.Username]:
-        entity[el.key] = fakerator.internet.userName;
+        entity[el.key] = fakerator.internet.userName();
         break;
       case EntityOptionsValues[EntityOptionsValues.FirstName]:
-        entity[el.key] = fakerator.names.firstName;
+        entity[el.key] = fakerator.names.firstName();
         break;
       case EntityOptionsValues[EntityOptionsValues.LastName]:
-        entity[el.key] = fakerator.names.lastName;
+        entity[el.key] = fakerator.names.lastName();
         break;
       case EntityOptionsValues[EntityOptionsValues.Email]:
-        entity[el.key] = fakerator.internet.email;
+        entity[el.key] = fakerator.internet.email();
         break;
       case EntityOptionsValues[EntityOptionsValues.Avatar]:
-        entity[el.key] = generateAvatarUrl;
+        entity[el.key] = generateAvatarUrl();
         break;
       case EntityOptionsValues[EntityOptionsValues.Date]:
         const now = new Date();
@@ -155,7 +155,7 @@ export const createEntity = (data: KeyValuePair[]) => {
         entity[el.key] = Math.random() < 0.5;
         break;
       case EntityOptionsValues[EntityOptionsValues.Encrypt]:
-        entity[el.key] = CryptoJS.lib.WordArray.random(32);
+        entity[el.key] = getRandomHash(50, null);
         break;
       default:
         break;

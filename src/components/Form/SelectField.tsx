@@ -5,18 +5,17 @@ type SelectFieldProps = {
   options: Option[];
   index?: number;
   disabled?: boolean;
-  name?: string;
   change: Function;
 };
 
-export const SelectField: FC<SelectFieldProps> = ({ options, index, name, disabled, change }) => {
+export const SelectField: FC<SelectFieldProps> = ({ options, index, disabled, change }) => {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     change(index, e.target.value, "select");
   };
 
   return (
     <>
-      <select className="w-40 mb-5 p-2" disabled={disabled} name={name} onChange={handleChange}>
+      <select className="w-40 mb-5 p-2" disabled={disabled} onChange={handleChange}>
         {options.map(({ key, value }) => (
           <option key={key} value={value}>
             {key}

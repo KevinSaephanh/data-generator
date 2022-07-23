@@ -30,6 +30,8 @@ export const EntityForm = () => {
     const { key } = event;
     const isValidKey =
       !isNaN(+key) || key === "Backspace" || key === "ArrowRight" || key === "ArrowLeft";
+
+    // Prevent invalid keys from being input
     if (!isValidKey) event.preventDefault();
   };
 
@@ -118,7 +120,7 @@ export const EntityForm = () => {
             pattern="[0-9]"
             min="1"
             max="1000"
-            className="border-b-2 border-black w-16"
+            className="border-b-2 border-black w-16 pl-1"
             title="Input number of records you want to generate"
             onKeyDown={handleKeyDown}
             onChange={handleNumChange}

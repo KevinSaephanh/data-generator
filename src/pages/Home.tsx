@@ -3,7 +3,6 @@ import { EntityForm } from "../components/Form/EntityForm";
 import { EnvTypeForm } from "../components/Form/EnvTypeForm";
 import { Preview } from "../components/Preview/Preview";
 import { TabList } from "../components/TabList/TabList";
-import { createEntity } from "../staticDataGenerator";
 import { RESET_PREVIEWS } from "../store/ActionTypes";
 import { AppContext } from "../store/AppProvider";
 
@@ -13,13 +12,6 @@ export const Home: FC = () => {
   useEffect(() => {
     // Reset previews
     dispatch({ type: RESET_PREVIEWS });
-
-    const n = createEntity([
-      { key: "HELLO", value: "21312" },
-      { key: "HELLOdad", value: "21312" },
-      { key: "HELLdcvxO", value: "21312" },
-    ]);
-    console.log(n);
   }, []);
 
   return (
